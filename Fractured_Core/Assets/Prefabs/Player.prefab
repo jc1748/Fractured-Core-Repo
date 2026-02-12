@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 4964310135942069319}
   - component: {fileID: 2399208212444601741}
   - component: {fileID: 4530050793686383146}
+  - component: {fileID: 1983946781344766615}
   m_Layer: 3
   m_Name: Player
   m_TagString: Player
@@ -213,6 +214,23 @@ MonoBehaviour:
   level: 1
   currentXP: 0
   xpToNextLevel: 10
+--- !u!114 &1983946781344766615
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2614577182934004233}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 614e486548940574b837ff088ac64384, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 5
+  currentHealth: 0
+  spriteRenderer: {fileID: 0}
+  flashColor: {r: 1, g: 0, b: 0, a: 1}
+  flashDuration: 0.1
 --- !u!1 &5052542304253987891
 GameObject:
   m_ObjectHideFlags: 0

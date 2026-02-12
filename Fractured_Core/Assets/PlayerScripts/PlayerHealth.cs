@@ -54,13 +54,6 @@ public class PlayerHealth : MonoBehaviour
 
     }
 
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.K))
-        {
-            TakeDamage(1);
-        }
-    }
 
     private System.Collections.IEnumerator FlashRed()
     {

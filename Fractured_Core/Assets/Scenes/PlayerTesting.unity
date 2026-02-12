@@ -786,39 +786,28 @@ MonoBehaviour:
     m_MipBias: 0
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
---- !u!1 &776800229 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2614577182934004233, guid: cc99c5ec914ae30438815ad7604f1758, type: 3}
-  m_PrefabInstance: {fileID: 888501999178625439}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &776800237 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4530050793686383146, guid: cc99c5ec914ae30438815ad7604f1758, type: 3}
   m_PrefabInstance: {fileID: 888501999178625439}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 776800229}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ac7d31fcb18cb714e8d3db533f2fd6ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &776800238
+--- !u!114 &776800238 stripped
 MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 1983946781344766615, guid: cc99c5ec914ae30438815ad7604f1758, type: 3}
+  m_PrefabInstance: {fileID: 888501999178625439}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 776800229}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 614e486548940574b837ff088ac64384, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 5
-  currentHealth: 0
-  spriteRenderer: {fileID: 0}
-  flashColor: {r: 1, g: 0, b: 0, a: 1}
-  flashDuration: 0.1
 --- !u!1 &800845688
 GameObject:
   m_ObjectHideFlags: 0
@@ -1390,10 +1379,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 2614577182934004233, guid: cc99c5ec914ae30438815ad7604f1758, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 776800238}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cc99c5ec914ae30438815ad7604f1758, type: 3}
 --- !u!1001 &7316497623266004503
 PrefabInstance:
@@ -1447,9 +1433,9 @@ PrefabInstance:
       propertyPath: m_Name
       value: EnemyTest
       objectReference: {fileID: 0}
-    - target: {fileID: 8318211903028710071, guid: 8dd66218a3d7be346861160fefffc1f8, type: 3}
-      propertyPath: enemyMaxHealth
-      value: 50
+    - target: {fileID: 940748742133024128, guid: 8dd66218a3d7be346861160fefffc1f8, type: 3}
+      propertyPath: m_TagString
+      value: Enemy
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
