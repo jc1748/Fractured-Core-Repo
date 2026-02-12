@@ -3,11 +3,7 @@ using UnityEngine;
 public class PlayerHealth : MonoBehaviour
 {
     public float maxHealth = 5f;
-    private float currentHealth;
-
-    [Header("Health Bar")]
-    public Transform healthBar;  // drag the health bar here
-    private Vector3 originalScale;
+    public float currentHealth;
 
     [Header("Flash settings")]
     public SpriteRenderer spriteRenderer;//assign player sprite
@@ -20,10 +16,6 @@ public class PlayerHealth : MonoBehaviour
     {
         currentHealth = maxHealth;
 
-        if (healthBar != null)
-        {
-            originalScale = healthBar.localScale;
-        }
         if (spriteRenderer != null)
         {
             originalColor = spriteRenderer.color;
@@ -34,13 +26,6 @@ public class PlayerHealth : MonoBehaviour
     {
         currentHealth -= amount;
         Debug.Log("Player took " + amount + " damage!");
-
-        // update health bar scaling
-        if (healthBar != null)
-        {
-            float percent = Mathf.Clamp01(currentHealth / maxHealth);
-            healthBar.localScale = new Vector3(originalScale.x * percent, originalScale.y, originalScale.z);
-        }
 
         if (spriteRenderer != null)
         {
@@ -67,12 +52,13 @@ public class PlayerHealth : MonoBehaviour
             currentHealth = maxHealth;
         }
 
-        //update health bar
-        if(healthBar != null)
+    }
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.K))
         {
-            float percent= Mathf.Clamp01(currentHealth / maxHealth);
-            //localScale.x,y,z is the size of my healthbar so .x is the one that grows or shrinks
-            healthBar.localScale = new Vector3(originalScale.x * percent, originalScale.y, originalScale.z);
+            TakeDamage(1);
         }
     }
 

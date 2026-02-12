@@ -22,8 +22,6 @@ public class PlayerMovement : MonoBehaviour
     private float dashTimeLeft = 0f;
     private float nextDashTime = 0f;
 
-    private float ghostTimer = 0f;
-
     // If you still want jump later, keep it separate from this (beat 'em ups often fake jump)
     // public float jumpForce = 12f;
 

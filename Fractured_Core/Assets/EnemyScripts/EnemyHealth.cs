@@ -45,8 +45,19 @@ public class EnemyHealth : MonoBehaviour
 
     }
 
-    public void TakeLaunchDamage(int damage)
+    public bool TakeLaunchDamage(int damage)
     {
+        if (damage <= 0)
+        {
+            return false;
+        }
+
+        if (currentHealth <= 0)
+        {
+            return false;
+        }
+
+
         currentHealth -= damage;
 
         // pop enemy upward
@@ -68,7 +79,7 @@ public class EnemyHealth : MonoBehaviour
             DamageNumber dn = num.GetComponent<DamageNumber>();
             dn.SetDamage(damage);
 
-            //COMBO-SCALED SIZE � VERY NOTICEABLE
+            //COMBO-SCALED SIZE VERY NOTICEABLE
             float launchScale = 1.5f * ComboManager.instance.damageMultiplier;
             dn.SetScale(launchScale);
         }
@@ -89,11 +100,25 @@ public class EnemyHealth : MonoBehaviour
             Die();
         }
 
+        return true;
+
     }
 
-    public void TakeDamage(int damage)
+    public bool TakeDamage(int damage)
     {
+        if (damage <= 0)
+        {
+            return false;
+        }
+
+        if (currentHealth <= 0)
+        {
+            return false;//already dead
+        }
+
         currentHealth -= damage;
+
+
         //flash white/red or play animation
 
 
@@ -125,11 +150,15 @@ public class EnemyHealth : MonoBehaviour
             StartCoroutine(FlashRed());
         }
 
+        
+
         //check death
         if (currentHealth <= 0) 
         {
             Die();
         }
+
+        return true; //damage applied
     }
 
     void Die()

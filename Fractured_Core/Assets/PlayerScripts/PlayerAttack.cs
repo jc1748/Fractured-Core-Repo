@@ -15,6 +15,22 @@ public class PlayerAttack : MonoBehaviour
     public SpriteRenderer attackIndicator;
     public Color indicatorColor = new Color(1, 1, 0, 0.25f); // yellow transparent
 
+    [Header("XP Settings")]
+    private PlayerXP playerXP;
+    public int xpPerHit = 1;
+
+    void Awake()
+    {
+        Debug.Log("PlayerAttack Awake running on: " + gameObject.name);
+
+        playerXP = GetComponent<PlayerXP>();
+        
+        if (playerXP == null)
+        {
+            Debug.LogError("Player XP NOT FOUND on Player");
+        }
+    }
+
     void Start()
     {
         if (attackIndicator != null)
@@ -66,10 +82,17 @@ public class PlayerAttack : MonoBehaviour
             {
 
                 int totalDamage = attackDamage;
-                
-                eh.TakeDamage(totalDamage);
+
+                bool didDamage = eh.TakeDamage(totalDamage);
+                Debug.Log($"didDamage={didDamage}, playerXP={(playerXP == null ? "NULL" : "FOUND")}");
+
+                if (didDamage && playerXP != null)
+                {
+                    playerXP.AddXP(xpPerHit);
+                }
 
             }
+
         }
         if (attackIndicator != null)
             attackIndicator.gameObject.SetActive(false);
