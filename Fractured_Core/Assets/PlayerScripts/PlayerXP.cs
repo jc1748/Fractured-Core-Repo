@@ -11,13 +11,13 @@ public class PlayerXP : MonoBehaviour
     //how much XP is required to Level Up
     public int xpToNextLevel = 10;
 
-    //reference to PlayerAttack.cs so we can upgrade damage on Level up
-    private PlayerAttack playerAttack;
+    //reference to PlayerStats.cs so we can add stat points on Level up
+    private PlayerStats playerStats;
 
     void Awake()
     {
-        //get the PlayerAttack component from the same GameObject
-        playerAttack = GetComponent<PlayerAttack>();
+        //get the PlayerStats component from the same GameObject
+        playerStats = GetComponent<PlayerStats>();
     }
 
     //this method is called whenever the player gains XP
@@ -29,44 +29,31 @@ public class PlayerXP : MonoBehaviour
             return;
         }
 
-        //add Xp to the player's total
+        //add XP to the current amount
         currentXP += amount;
-        Debug.Log($"Gained {amount} XP. Total XP: {currentXP}");
+        Debug.Log($"XP +{amount} (Total: {currentXP}/{xpToNextLevel})");
 
-        //check if the player has enough XP to level up
-        CheckLevelUp();
-    }
-
-    void CheckLevelUp()
-    {
-        //using a while loop in case the player gains enough
-        //xp to level up multiple times at once
-
+        //if we have enough XP, level up--supports multiple levels at once
         while (currentXP >= xpToNextLevel)
         {
-            //subtract the Xp needed for this level
-            currentXP -= xpToNextLevel;
-
-            //increase player level
-            level++;
-            Debug.Log("LEVEL UP! Player is now level "+ level);
-
-            //increase XP required for the next level
-            //(simple scaling systm)
-            xpToNextLevel += 5;
-
-            //Apply a reward for leveling up
-            ApplyLevelReward();
+            currentXP-=xpToNextLevel;
+            LevelUp();
         }
     }
 
-    void ApplyLevelReward()
+   void LevelUp()
     {
-        //for now, leveling up increases attack damage
-        if(playerAttack != null)
+        level++;
+
+        //increase how much Xp we need next time(scaling)
+        xpToNextLevel += 5;
+
+        Debug.Log($"LEVEL UP! Level {level}. Next level requires {xpToNextLevel}XP.");
+
+        //give the player 1 stat point on every level up
+        if (playerStats != null)
         {
-            playerAttack.attackDamage += 1;
-            Debug.Log("Attack damage increased to "+ playerAttack.attackDamage);
+            playerStats.AddStatPoints(1);
         }
     }
 

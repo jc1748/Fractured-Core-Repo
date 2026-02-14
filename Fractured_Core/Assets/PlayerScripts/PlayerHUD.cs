@@ -5,7 +5,9 @@ public class PlayerHUD : MonoBehaviour
 {
     public PlayerXP playerXP;
     public PlayerHealth playerHealth;
+    public PlayerUltimate playerUltimate;
 
+    public Slider ultSlider;
     public Slider xpSlider;
     public Slider hpSlider;
 
@@ -19,6 +21,11 @@ public class PlayerHUD : MonoBehaviour
         if(playerHealth != null && hpSlider != null)
         {
             hpSlider.value = (float)playerHealth.currentHealth / playerHealth.maxHealth;
+        }
+
+        if(playerUltimate !=null && ultSlider != null)
+        {
+            ultSlider.value = playerUltimate.currentUlt / playerUltimate.maxUlt;
         }
     }
 }

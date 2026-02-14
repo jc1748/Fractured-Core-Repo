@@ -6,7 +6,6 @@ public class PlayerAttack : MonoBehaviour
     public float attackRange = 0.7f;//how far they attack
     public int attackDamage = 1;//damage
     public float attackRate = 2f;//attacks per second
-    public float playerLaunchFollowForce = 4f;//how far the player moves upward when using launch attack
 
     private float nextAttackTime = 0f;//cool down time
     public LayerMask enemyLayers;//which Layers are Enemies
@@ -15,20 +14,21 @@ public class PlayerAttack : MonoBehaviour
     public SpriteRenderer attackIndicator;
     public Color indicatorColor = new Color(1, 1, 0, 0.25f); // yellow transparent
 
+    [Header("Ultimate Settings")]
+    private PlayerUltimate playerUltimate;
+
     [Header("XP Settings")]
     private PlayerXP playerXP;
     public int xpPerHit = 1;
 
+    [Header("Player Stats Settings")]
+    private PlayerStats playerStats;
+
     void Awake()
     {
-        Debug.Log("PlayerAttack Awake running on: " + gameObject.name);
-
         playerXP = GetComponent<PlayerXP>();
-        
-        if (playerXP == null)
-        {
-            Debug.LogError("Player XP NOT FOUND on Player");
-        }
+        playerStats = GetComponent<PlayerStats>();
+        playerUltimate = GetComponent<PlayerUltimate>();
     }
 
     void Start()
@@ -53,12 +53,6 @@ public class PlayerAttack : MonoBehaviour
                 //set next attack time
                 nextAttackTime = Time.time + 1f / attackRate;
             }
-
-            if (Input.GetKeyDown(KeyCode.Q))
-            {
-                LaunchAttack();
-                nextAttackTime = Time.time + 1f / attackRate;
-            }
         }
     }
     void Attack()
@@ -80,13 +74,33 @@ public class PlayerAttack : MonoBehaviour
             EnemyHealth eh = enemy.GetComponent<EnemyHealth>();
             if (eh != null)
             {
-
+                //start with base damage
                 int totalDamage = attackDamage;
 
-                bool didDamage = eh.TakeDamage(totalDamage);
-                Debug.Log($"didDamage={didDamage}, playerXP={(playerXP == null ? "NULL" : "FOUND")}");
+                //if player stats exists, scale damage by strength multiplier
+                if (playerStats != null)
+                {
+                    //multiply base damage by a scaling number
+                    float scaled = attackDamage * playerStats.GetDamageMultiplier();
 
-                if (didDamage && playerXP != null)
+                    //convert float to int (rounded)
+                    totalDamage = Mathf.RoundToInt(scaled);
+                }
+
+                //apply damage once, then gain XP if damage actually happened
+                bool didDamage = eh.TakeDamage(totalDamage);
+                if (didDamage)
+                {
+                    //gain XP
+                    if (playerXP != null)
+                        playerXP.AddXP(xpPerHit);
+
+                    //gain ult charge
+                    if (playerUltimate != null)
+                        playerUltimate.GainUltFromHit();
+                }
+
+                if (didDamage && playerXP !=null)
                 {
                     playerXP.AddXP(xpPerHit);
                 }
@@ -94,46 +108,6 @@ public class PlayerAttack : MonoBehaviour
             }
 
         }
-        if (attackIndicator != null)
-            attackIndicator.gameObject.SetActive(false);
     }
-
-    void LaunchAttack()
-    {
-        Debug.Log("Launch Attack!");
-
-        if (attackPoint == null)
-        {
-            Debug.LogError("AttackPoint is NOT assigned on PlayerAttack.");
-            return;
-        }
-
-        Rigidbody2D rb = GetComponent<Rigidbody2D>();
-        if (rb == null)
-        {
-            Debug.LogError("Rigidbody2D is missing on the player.");
-            return;
-        }
-
-        if (attackIndicator != null)
-        {
-            attackIndicator.transform.position = attackPoint.position;
-            attackIndicator.gameObject.SetActive(true);
-        }
-
-        rb.linearVelocity = new Vector2(rb.linearVelocity.x, 0f);
-        rb.AddForce(Vector2.up * playerLaunchFollowForce, ForceMode2D.Impulse);
-    }
-        //lets me see the attack range in scene view
-        void OnDrawGizmosSelected()
-    {
-        if (attackPoint == null)
-        {
-            return;
-        }
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(attackPoint.position, attackRange);
-    }
-
 
 }

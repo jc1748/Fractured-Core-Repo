@@ -24,18 +24,23 @@ public class PlayerHealth : MonoBehaviour
 
     public void TakeDamage(float amount)
     {
-        currentHealth -= amount;
-        Debug.Log("Player took " + amount + " damage!");
+        //grab stats from the same player object
+        PlayerStats stats = GetComponent<PlayerStats>();
 
-        if (spriteRenderer != null)
+        //start with the incoming damage
+        float finalDamage = amount;
+
+        //if stats exist, reduce damage using defense multiplier
+        //example= defense multiplier 0.90 means take 90% damage
+
+        if (stats != null)
         {
-            StartCoroutine(FlashRed());
+            finalDamage *= stats.GetDefenseMultiplier();
         }
 
-        if (currentHealth <= 0)
-        {
-            Die();
-        }
+        currentHealth -= finalDamage;
+
+        Debug.Log("Player took " + finalDamage + " damage (after defense)!");
     }
 
     void Die()
