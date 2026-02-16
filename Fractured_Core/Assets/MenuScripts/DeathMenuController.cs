@@ -1,12 +1,13 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using TMPro;
 using UnityEngine.UI;
 
 public class DeathMenuController : MonoBehaviour
 {
     [Header("UI References")]
-    public GameObject panel; //drag death menu panel here
-    public Text pointsText; //drag points text here
+    public CanvasGroup canvasGroup; //drag death menu panel here
+    public TextMeshProUGUI pointsText; //drag points text here
 
     [Header("Buttons")]
     public Button strengthButton;
@@ -20,11 +21,18 @@ public class DeathMenuController : MonoBehaviour
 
     void Awake()
     {
-        if(panel == null)
+        if(canvasGroup == null)
         {
-            panel = gameObject;
+            canvasGroup = GetComponent<CanvasGroup>();
         }
-        panel.SetActive(false);
+
+        //start hidden (but panel stays active)
+        Hide();
+    }
+
+    public bool CanShowUpgradeMenu(PlayerStats stats)
+    {
+        return stats != null && stats.statPoints > 0;
     }
 
     //call this when player dies
@@ -32,79 +40,87 @@ public class DeathMenuController : MonoBehaviour
     {
         playerStats = stats;
 
-        Time.timeScale = 0f;
 
-        panel.SetActive(true);
+        if (canvasGroup != null)
+        {
+            canvasGroup.alpha = 1f;
+            canvasGroup.interactable = true;
+            canvasGroup.blocksRaycasts= true;
+        }
+
+        //update text/buttons
         RefreshUI();
+        Debug.Log("Death menu SHOW called");
     }
 
-    //updates the text + enables/disables buttons
-    void RefreshUI()
+    public void Hide()
+    {
+        if (canvasGroup != null)
+        {
+            canvasGroup.alpha = 0f;
+            canvasGroup.interactable = false;
+            canvasGroup.blocksRaycasts= false;
+        }
+    }
+
+    /// Update points text 
+    private void RefreshUI()
     {
         if (playerStats == null) return;
 
-        //update points text
-        if (pointsText != null)
+        if (pointsText != null && playerStats != null)
         {
             pointsText.text = "Stat Points: " + playerStats.statPoints;
+
+            bool canUpgrade = playerStats.statPoints > 0;
+
+            if(strengthButton) strengthButton.interactable = canUpgrade;
+            if(defenseButton) defenseButton.interactable = canUpgrade;
+            if(moveSpeedButton) moveSpeedButton.interactable = canUpgrade;
+            if(ultButton) ultButton.interactable = canUpgrade;
         }
-
-        //if no points, disable upgrade buttons
-        bool canSpend = playerStats.statPoints > 0;
-
-        if (strengthButton != null) strengthButton.interactable = canSpend;
-        if (defenseButton != null) defenseButton.interactable = canSpend;
-        if (moveSpeedButton != null) moveSpeedButton.interactable = canSpend;
-        if (ultButton != null) ultButton.interactable = canSpend;
-        
     }
 
-    //button callbacks
-
+    //Button callbacks ----
     public void SpendStrength()
     {
-        if (playerStats == null)
-        {
-            return;
-        }
+        Debug.Log("SpendStrength clicked. playerStats=" + playerStats);
+        if (playerStats == null) return;
         playerStats.UpgradeStrength();
         RefreshUI();
     }
 
     public void SpendDefense()
     {
-        if (playerStats == null)
-        {
-            return;
-        }
+        Debug.Log("SpendDefense clicked. playerStats=" + playerStats);
+        if (playerStats == null) return;
         playerStats.UpgradeDefense();
         RefreshUI();
     }
+
     public void SpendMoveSpeed()
     {
-        if (playerStats == null)
-        {
-            return;
-        }
+        Debug.Log("SpendMoveSpeed clicked. playerStats=" + playerStats);
+        if (playerStats == null) return;
         playerStats.UpgradeMoveSpeed();
         RefreshUI();
     }
+
     public void SpendUltimate()
     {
-        if (playerStats == null)
-        {
-            return;
-        }
+        Debug.Log("SpendUltimate clicked. playerStats=" + playerStats);
+        if (playerStats == null) return;
         playerStats.UpgradeUltimate();
         RefreshUI();
     }
 
     public void RestartLevel()
     {
-        //unpause before reloading
+        Debug.Log("RestartLevel clicked");
+        // Unpause before reload
         Time.timeScale = 1f;
 
-        //reload the currently active scene
+        // Reload current scene
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }

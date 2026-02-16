@@ -83,9 +83,12 @@ public class PlayerHealth : MonoBehaviour
             Debug.LogError("DeathMenu controller not assigned on Player health");
         }
 
-
+        //disable movement/attack so player can't act while dead
         PlayerMovement move = GetComponent<PlayerMovement>();
         if (move != null) move.enabled = false;
+
+        PlayerAttack atk = GetComponent<PlayerAttack>();
+        if(atk != null) atk.enabled = false;
 
     }
 
