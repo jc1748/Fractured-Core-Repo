@@ -17,21 +17,17 @@ public class PlayerStats : MonoBehaviour
     private const float moveSpeedPercent = 0.007f;
     private const float ultChargePercent = 0.0104f;
 
+   
+    void Start()
+    {
+        Load();
+    }
+   
     //called by PlayerXP when leveling up
     public void AddStatPoints(int amount)
     {
         statPoints += amount;
         Debug.Log("Stat Points: " + statPoints);
-    }
-
-    //temp test controls
-    //These let you spend stat points without making UI yet
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Alpha1)) UpgradeStrength();
-        if (Input.GetKeyDown(KeyCode.Alpha2)) UpgradeDefense();
-        if (Input.GetKeyDown(KeyCode.Alpha3)) UpgradeMoveSpeed();
-        if (Input.GetKeyDown(KeyCode.Alpha4)) UpgradeUltimate();
     }
 
     //spend one point on strength
@@ -101,5 +97,24 @@ public class PlayerStats : MonoBehaviour
     public float GetUltChargeMultiplier()
     {
         return 1f + (ultStat * ultChargePercent);
+    }
+
+    public void Save()
+    {
+        PlayerPrefs.SetInt("StatPoints", statPoints);
+        PlayerPrefs.SetInt("Strength", strength);
+        PlayerPrefs.SetInt("Defense", defense);
+        PlayerPrefs.SetInt("MoveSpeed", moveSpeed);
+        PlayerPrefs.SetInt("Ultimate", ultStat);
+        PlayerPrefs.Save();
+    }
+
+    public void Load()
+    {
+        statPoints = PlayerPrefs.GetInt("StatPoints", statPoints);
+        strength = PlayerPrefs.GetInt("Strength", strength);
+        defense = PlayerPrefs.GetInt("Defense", defense);
+        moveSpeed = PlayerPrefs.GetInt("MoveSpeed", moveSpeed);
+        ultStat = PlayerPrefs.GetInt("Ultimate", ultStat);
     }
 }

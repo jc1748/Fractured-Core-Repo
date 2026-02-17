@@ -17,6 +17,8 @@ public class PlayerHealth : MonoBehaviour
 
     private Color originalColor;
 
+    [SerializeField] private DeathFlowController deathFlow;
+
     void Start()
     {
         currentHealth = maxHealth;
@@ -69,19 +71,8 @@ public class PlayerHealth : MonoBehaviour
     void Die()
     {
         isDead = true;
-
         Debug.Log("Player Died!");
         
-        //show death menu (and spend stat points)
-        if(deathMenu != null)
-        {
-            PlayerStats stats = GetComponent<PlayerStats>();
-            deathMenu.Show(stats);
-        }
-        else
-        {
-            Debug.LogError("DeathMenu controller not assigned on Player health");
-        }
 
         //disable movement/attack so player can't act while dead
         PlayerMovement move = GetComponent<PlayerMovement>();
@@ -89,6 +80,12 @@ public class PlayerHealth : MonoBehaviour
 
         PlayerAttack atk = GetComponent<PlayerAttack>();
         if(atk != null) atk.enabled = false;
+
+        //play death animation or something
+
+        //run fade/menu logic
+        if (deathFlow != null) deathFlow.BeginDeathFlow();
+        else Debug.LogError("DeathFlowController not assigned/found");
 
     }
 

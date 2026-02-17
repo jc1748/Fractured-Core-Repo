@@ -16,6 +16,12 @@ public class DeathMenuController : MonoBehaviour
     public Button ultButton;
     public Button restartButton;
 
+    [Header("Stat Value Text")]
+    public TextMeshProUGUI strengthValueText;
+    public TextMeshProUGUI defenseValueText;
+    public TextMeshProUGUI moveSpeedValueText;
+    public TextMeshProUGUI ultimateValueText;
+
     //reference to players stats
     private PlayerStats playerStats;
 
@@ -68,17 +74,19 @@ public class DeathMenuController : MonoBehaviour
     {
         if (playerStats == null) return;
 
-        if (pointsText != null && playerStats != null)
-        {
-            pointsText.text = "Stat Points: " + playerStats.statPoints;
+        pointsText.text = "Stat Points: " + playerStats.statPoints;
 
-            bool canUpgrade = playerStats.statPoints > 0;
+        strengthValueText.text = "Strength: " + playerStats.strength;
+        defenseValueText.text = "Defense: "+ playerStats.defense;
+        moveSpeedValueText.text = "Move Speed: "+playerStats.moveSpeed;
+        ultimateValueText.text = "Ultimate: " + playerStats.ultStat;
 
-            if(strengthButton) strengthButton.interactable = canUpgrade;
-            if(defenseButton) defenseButton.interactable = canUpgrade;
-            if(moveSpeedButton) moveSpeedButton.interactable = canUpgrade;
-            if(ultButton) ultButton.interactable = canUpgrade;
-        }
+        bool canUpgrade = playerStats.statPoints > 0;
+
+        strengthButton.interactable = canUpgrade;
+        defenseButton.interactable = canUpgrade;
+        moveSpeedButton.interactable = canUpgrade;
+        ultButton.interactable = canUpgrade;
     }
 
     //Button callbacks ----
@@ -119,6 +127,8 @@ public class DeathMenuController : MonoBehaviour
         Debug.Log("RestartLevel clicked");
         // Unpause before reload
         Time.timeScale = 1f;
+
+        if (playerStats != null) playerStats.Save();
 
         // Reload current scene
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
