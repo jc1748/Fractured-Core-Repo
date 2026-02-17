@@ -12,12 +12,18 @@ public class PlayerHealth : MonoBehaviour
     public Color flashColor = Color.red;
     public float flashDuration = 0.1f;
 
-    [Header("Death Menu")]
-    public DeathMenuController deathMenu;
 
     private Color originalColor;
 
     [SerializeField] private DeathFlowController deathFlow;
+
+    private void Awake()
+    {
+        if (deathFlow == null)
+        {
+            deathFlow = FindFirstObjectByType<DeathFlowController>();
+        }
+    }
 
     void Start()
     {
@@ -70,6 +76,8 @@ public class PlayerHealth : MonoBehaviour
 
     void Die()
     {
+        var stats = GetComponent<PlayerStats>();
+
         isDead = true;
         Debug.Log("Player Died!");
         
@@ -84,7 +92,9 @@ public class PlayerHealth : MonoBehaviour
         //play death animation or something
 
         //run fade/menu logic
-        if (deathFlow != null) deathFlow.BeginDeathFlow();
+        if (deathFlow == null) deathFlow = FindFirstObjectByType<DeathFlowController>();
+
+        if (deathFlow != null) deathFlow.BeginDeathFlow(stats);
         else Debug.LogError("DeathFlowController not assigned/found");
 
     }

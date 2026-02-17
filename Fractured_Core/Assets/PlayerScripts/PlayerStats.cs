@@ -3,25 +3,42 @@ using UnityEngine;
 public class PlayerStats : MonoBehaviour
 {
     [Header("Stat Points")]
-    public int statPoints = 0; //points you can spend
+    public int statPoints
+    {
+        get => RunManager.Instance.stats.statPoints;
+        set => RunManager.Instance.stats.statPoints = value;
+    }
 
     [Header("Stats")]
-    public int strength = 0; //+damage
-    public int defense = 0; //+damage reduction
-    public int moveSpeed = 0; //move speed
-    public int ultStat = 0; //+ult charge per hit
+    public int strength
+    {
+        get => RunManager.Instance.stats.strength;
+        set => RunManager.Instance.stats.strength = value;
+    }
+
+    public int defense
+    {
+        get => RunManager.Instance.stats.defense;
+        set => RunManager.Instance.stats.defense = value;
+    }
+
+    public int moveSpeed
+    {
+        get => RunManager.Instance.stats.moveSpeed;
+        set => RunManager.Instance.stats.moveSpeed = value;
+    }
+
+    public int ultStat
+    {
+        get => RunManager.Instance.stats.ultStat;
+        set => RunManager.Instance.stats.ultStat = value;
+    }
 
     //values from stat sheet that was previously calculated
     private const float strengthPercent = 0.0386f;
     private const float defensePercent = 0.0138f;
     private const float moveSpeedPercent = 0.007f;
     private const float ultChargePercent = 0.0104f;
-
-   
-    void Start()
-    {
-        Load();
-    }
    
     //called by PlayerXP when leveling up
     public void AddStatPoints(int amount)
@@ -99,22 +116,4 @@ public class PlayerStats : MonoBehaviour
         return 1f + (ultStat * ultChargePercent);
     }
 
-    public void Save()
-    {
-        PlayerPrefs.SetInt("StatPoints", statPoints);
-        PlayerPrefs.SetInt("Strength", strength);
-        PlayerPrefs.SetInt("Defense", defense);
-        PlayerPrefs.SetInt("MoveSpeed", moveSpeed);
-        PlayerPrefs.SetInt("Ultimate", ultStat);
-        PlayerPrefs.Save();
-    }
-
-    public void Load()
-    {
-        statPoints = PlayerPrefs.GetInt("StatPoints", statPoints);
-        strength = PlayerPrefs.GetInt("Strength", strength);
-        defense = PlayerPrefs.GetInt("Defense", defense);
-        moveSpeed = PlayerPrefs.GetInt("MoveSpeed", moveSpeed);
-        ultStat = PlayerPrefs.GetInt("Ultimate", ultStat);
-    }
 }

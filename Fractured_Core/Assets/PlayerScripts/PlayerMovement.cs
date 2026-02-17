@@ -14,6 +14,8 @@ public class PlayerMovement : MonoBehaviour
     public float dashDuration = 0.15f;
     public float dashCooldown = 2f;
 
+    private Animator anim;
+
 
     private Rigidbody2D rb;
 
@@ -36,6 +38,9 @@ public class PlayerMovement : MonoBehaviour
         //grab player stats from the same game object(player)
         playerStats = GetComponent<PlayerStats>();
 
+        //animation set up
+        anim = GetComponent<Animator>();
+
         // Make sure these are set in Inspector too:
         // Rigidbody2D Body Type = Kinematic
         // Collision Detection = Continuous (optional)
@@ -51,10 +56,12 @@ public class PlayerMovement : MonoBehaviour
         //normalize so diagonal movement isn't faster than straight movement
         moveInput = new Vector2(horizontal, vertical).normalized;
 
-        // Flip sprite on horizontal movement only
+        // Flip sprite on horizontal movement only (preserve scale)
         if (horizontal != 0)
         {
-            transform.localScale = new Vector3(Mathf.Sign(horizontal), 1f, 1f);
+            Vector3 s = transform.localScale;
+            s.x = Mathf.Abs(s.x) * Mathf.Sign(horizontal);//keeps size and only flips direction
+            transform.localScale = s;
         }
 
         //start with base speed
@@ -81,6 +88,13 @@ public class PlayerMovement : MonoBehaviour
             {
                 isDashing = false;
             }
+        }
+
+        //animation movement
+        if (anim != null)
+        {
+            bool isMoving = moveInput.sqrMagnitude > 0.01f && !isDashing;
+            anim.SetBool("isMoving", isMoving);
         }
     }
 

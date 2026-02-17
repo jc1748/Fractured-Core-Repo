@@ -10,6 +10,8 @@ public class PlayerAttack : MonoBehaviour
     private float nextAttackTime = 0f;//cool down time
     public LayerMask enemyLayers;//which Layers are Enemies
 
+    private Animator anim;
+
     [Header("Attack Indicator")]
     public SpriteRenderer attackIndicator;
     public Color indicatorColor = new Color(1, 1, 0, 0.25f); // yellow transparent
@@ -29,6 +31,7 @@ public class PlayerAttack : MonoBehaviour
         playerXP = GetComponent<PlayerXP>();
         playerStats = GetComponent<PlayerStats>();
         playerUltimate = GetComponent<PlayerUltimate>();
+        anim = GetComponent<Animator>();
     }
 
     void Start()
@@ -57,6 +60,12 @@ public class PlayerAttack : MonoBehaviour
     }
     void Attack()
     {
+        //animation configuration
+        if(anim != null)
+        {
+            anim.SetTrigger("attack");
+        }
+
         Debug.Log("Player attacked!");
 
         if (attackIndicator != null)
