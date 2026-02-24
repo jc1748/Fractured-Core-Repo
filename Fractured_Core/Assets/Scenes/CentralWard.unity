@@ -127,6 +127,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1682924312087191888, guid: cc99c5ec914ae30438815ad7604f1758, type: 3}
+      propertyPath: cameraShake
+      value: 
+      objectReference: {fileID: 1101170039}
     - target: {fileID: 2614577182934004233, guid: cc99c5ec914ae30438815ad7604f1758, type: 3}
       propertyPath: m_Name
       value: Player
@@ -176,6 +180,39 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cc99c5ec914ae30438815ad7604f1758, type: 3}
+--- !u!114 &282310007 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1682924312087191888, guid: cc99c5ec914ae30438815ad7604f1758, type: 3}
+  m_PrefabInstance: {fileID: 282310006}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1c710cbc55ad234e82b9443f32ab673, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &282310008 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1983946781344766615, guid: cc99c5ec914ae30438815ad7604f1758, type: 3}
+  m_PrefabInstance: {fileID: 282310006}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 614e486548940574b837ff088ac64384, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &282310009 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4530050793686383146, guid: cc99c5ec914ae30438815ad7604f1758, type: 3}
+  m_PrefabInstance: {fileID: 282310006}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac7d31fcb18cb714e8d3db533f2fd6ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1101170035
 GameObject:
   m_ObjectHideFlags: 0
@@ -187,6 +224,7 @@ GameObject:
   - component: {fileID: 1101170038}
   - component: {fileID: 1101170037}
   - component: {fileID: 1101170036}
+  - component: {fileID: 1101170039}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -268,6 +306,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1101170039
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1101170035}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 841424dfa7fe48e4da4fe3b5099a5a81, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1852028605
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -276,10 +326,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 95342740589639490, guid: ef3419bb3fd5f1a4d93c91b78c726fb5, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 2244200892652557707, guid: ef3419bb3fd5f1a4d93c91b78c726fb5, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -364,14 +410,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: UI Canvas_Manager
       objectReference: {fileID: 0}
-    - target: {fileID: 5089338631177221774, guid: ef3419bb3fd5f1a4d93c91b78c726fb5, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8894065856426788401, guid: ef3419bb3fd5f1a4d93c91b78c726fb5, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
+    - target: {fileID: 6043201044877409491, guid: ef3419bb3fd5f1a4d93c91b78c726fb5, type: 3}
+      propertyPath: playerXP
+      value: 
+      objectReference: {fileID: 282310009}
+    - target: {fileID: 6043201044877409491, guid: ef3419bb3fd5f1a4d93c91b78c726fb5, type: 3}
+      propertyPath: playerHealth
+      value: 
+      objectReference: {fileID: 282310008}
+    - target: {fileID: 6043201044877409491, guid: ef3419bb3fd5f1a4d93c91b78c726fb5, type: 3}
+      propertyPath: playerUltimate
+      value: 
+      objectReference: {fileID: 282310007}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

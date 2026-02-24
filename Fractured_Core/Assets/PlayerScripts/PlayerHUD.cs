@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class PlayerHUD : MonoBehaviour
 {
@@ -10,6 +11,37 @@ public class PlayerHUD : MonoBehaviour
     public Slider ultSlider;
     public Slider xpSlider;
     public Slider hpSlider;
+
+    void Awake()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+        FindPlayerReferences();
+    }
+
+    void OnDestroy()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        FindPlayerReferences();
+    }
+
+    void FindPlayerReferences()
+    {
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+
+        if( player == null)
+        {
+            Debug.LogWarning("HUD: No player found in scene");
+            return;
+        }
+
+        playerXP = player.GetComponent<PlayerXP>();
+        playerHealth = player.GetComponent<PlayerHealth>();
+        playerUltimate = player.GetComponent<PlayerUltimate>();
+    }
 
     void Update()
     {
@@ -25,7 +57,7 @@ public class PlayerHUD : MonoBehaviour
 
         if(playerUltimate !=null && ultSlider != null)
         {
-            ultSlider.value = playerUltimate.currentUlt / playerUltimate.maxUlt;
+            ultSlider.value = playerUltimate.currentUltCharge / playerUltimate.maxUlt;
         }
     }
 }

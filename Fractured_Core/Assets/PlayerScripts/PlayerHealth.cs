@@ -33,6 +33,14 @@ public class PlayerHealth : MonoBehaviour
         {
             originalColor = spriteRenderer.color;
         }
+        Debug.Log($"[PlayerHealth] Start on {gameObject.name}. Players in scene: {FindObjectsByType<PlayerHealth>(FindObjectsSortMode.None).Length}");
+    }
+
+    private void OnEnable()
+    {
+       isDead = false;
+       currentHealth = maxHealth;
+       Debug.Log($"[PlayerHealth] OnEnable -> currentHealth reset to {currentHealth}");
     }
 
     public void TakeDamage(float amount)
@@ -79,6 +87,7 @@ public class PlayerHealth : MonoBehaviour
         var stats = GetComponent<PlayerStats>();
 
         isDead = true;
+        currentHealth = 0f;
         Debug.Log("Player Died!");
         
 

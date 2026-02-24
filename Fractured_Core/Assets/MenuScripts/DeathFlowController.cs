@@ -86,4 +86,19 @@ public class DeathFlowController : MonoBehaviour
         // allow UI interaction after fade (menu is on top)
         fadeCanvasGroup.blocksRaycasts = false;
     }
+
+    public void ResetFlowState()
+    {
+        StopAllCoroutines();
+        isDying = false;
+        currentStats = null;
+
+        if (fadeCanvasGroup != null)
+        {
+            fadeCanvasGroup.alpha = 0f;
+            fadeCanvasGroup.interactable = false;
+            fadeCanvasGroup.blocksRaycasts = false;
+        }
+    }
+
 }

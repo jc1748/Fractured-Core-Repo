@@ -1747,6 +1747,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   deathMenu: {fileID: 2018324787637942225}
+  deathFlow: {fileID: 4216932499702799960}
   fadeCanvasGroup: {fileID: 3776482594367746360}
 --- !u!1 &3997065718563306789
 GameObject:

@@ -57,5 +57,10 @@ public class PlayerXP : MonoBehaviour
         }
     }
 
+    public void ResetXPProgress()
+    {
+        currentXP = 0;
+    }
+
 
 }

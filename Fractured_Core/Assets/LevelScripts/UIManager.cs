@@ -5,8 +5,8 @@ public class UIManager : MonoBehaviour
 {
     private static UIManager instance;
 
-    [Header("Optional References")]
     public DeathMenuController deathMenu;
+    public DeathFlowController deathFlow;
     public CanvasGroup fadeCanvasGroup;
 
     void Awake()
@@ -30,20 +30,38 @@ public class UIManager : MonoBehaviour
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        // Always unpause when a scene loads
+        // ALWAYS unpause after scene loads
         Time.timeScale = 1f;
 
-        // Hide death menu if it exists
+        // Hide the menu
         if (deathMenu != null)
             deathMenu.Hide();
 
-        // Reset fade overlay if it exists
-        if (fadeCanvasGroup != null)
-        {
-            fadeCanvasGroup.alpha = 0f;
-            fadeCanvasGroup.interactable = false;
-            fadeCanvasGroup.blocksRaycasts = false;
-        }
+        // Reset the death flow (clears isDying + coroutines + fade)
+        if (deathFlow != null)
+            deathFlow.ResetFlowState();
 
+
+        var player = GameObject.FindGameObjectWithTag("Player");
+        if (player != null)
+        {
+            var health = player.GetComponent<PlayerHealth>();
+            if (health != null)
+            {
+                health.currentHealth = health.maxHealth;
+            }
+
+            var xp = player.GetComponent<PlayerXP>();
+            if(xp != null)
+            {
+                xp.ResetXPProgress();
+            }
+
+            var ult = player.GetComponent<PlayerUltimate>();
+            if(ult != null)
+            {
+                ult.ResetUlt();
+            }
+        }
     }
 }
