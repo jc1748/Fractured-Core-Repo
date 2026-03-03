@@ -33,6 +33,10 @@ public class EnemyCombat : MonoBehaviour
             originalHitboxLocalPos = hitboxOrigin.localPosition;
         }
         sprite = GetComponentInChildren<SpriteRenderer>();
+
+        //auto-find animator so Attack trigger works
+        if (animator == null)
+            animator = GetComponentInChildren<Animator>();
     }
 
     private void Update()
