@@ -2,146 +2,192 @@ using UnityEngine;
 
 public class EnemyBrain : MonoBehaviour
 {
-    //enum- a named list of values
-    //using this to track what the enemy is currently doing
-    public enum State
-    {
-        Idle, 
-        Chase,
-        Attack,
-        Recover 
-    }
+    public enum State { Idle, Chase, Windup, Attack, Recover }
 
-    [Header("Detection Settings")]
-    [SerializeField] private float aggroRange = 8f;  //distance where enemy notices player
-    [SerializeField] private float attackRange = 1.8f; //distance required to attack
-    [SerializeField] private float loseAggroRange = 10f; //slightly larger than aggro range
-    [SerializeField] private float thinkInterval = 0.1f; //how often AI "thinks"
+    [Header("Detection")]
+    [SerializeField] private float aggroRangeX = 8f;     // horizontal aggro
+    [SerializeField] private float loseAggroRangeX = 10f;
+    [SerializeField] private float thinkInterval = 0.05f;
 
-    //other script references
-    [SerializeField] private Transform target; //player transform
-    [SerializeField] private EnemyMotor motor; //handles movement
-    [SerializeField] private EnemyCombat combat; //handles attacking
+    [Header("Combat (X axis)")]
+    [SerializeField] private float engageDistanceX = 1.6f; // “pace” distance on X
+    [SerializeField] private float attackRangeX = 2.0f;    // can attempt attacks within this X range
+    [SerializeField] private float deadZoneX = 0.15f;      // prevents jitter
+
+    [Header("Vertical Tracking (Castle Crashers vibe)")]
+    [SerializeField] private float alignRangeY = 2.5f;     // only try to align Y if within this
+    [SerializeField] private float alignDeadZoneY = 0.15f; // don't micro-jitter in Y
+
+    [Header("Timing")]
+    [SerializeField] private float windupTime = 0.25f;   // quick burst before swing
+    [SerializeField] private float recoverTime = 0.25f;  // pause after swing
+
+    [Header("Speed Feel")]
+    [SerializeField] private float chaseSpeedMultiplier = 1.0f;   // slow pacing
+    [SerializeField] private float windupSpeedMultiplier = 1.8f;  // fast step-in
+
+    [Header("References")]
+    [SerializeField] private Transform target;
+    [SerializeField] private EnemyMotor motor;
+    [SerializeField] private EnemyCombat combat;
 
     [Header("Debug")]
-    [SerializeField] private State currentState = State.Idle;
+    [SerializeField] private State state = State.Idle;
 
     private float thinkTimer;
+    private float stateTimer;
 
-    //automatically grap components if missing
-    private void Reset()
-    {
-        motor = GetComponent<EnemyMotor>();
-        combat = GetComponent<EnemyCombat>();
-    }
+    private float baseMoveSpeed;
 
     private void Awake()
     {
         if (!motor) motor = GetComponent<EnemyMotor>();
         if (!combat) combat = GetComponent<EnemyCombat>();
+
+        // We need EnemyMotor to expose MoveSpeed and SetMoveSpeed (small change below)
+        baseMoveSpeed = motor.MoveSpeed;
     }
 
     private void Start()
     {
-        //automatically find player with tag
         if (!target)
         {
             GameObject player = GameObject.FindGameObjectWithTag("Player");
-            if (player)
-            {
-                target = player.transform;
-            }
+            if (player) target = player.transform;
         }
     }
 
     private void Update()
     {
-        //countdown timer
-        thinkTimer -=Time.deltaTime;
-
-        //only run ai logic occasionally
-        if (thinkTimer > 0f)
-        {
-            return;
-        }
-
+        thinkTimer -= Time.deltaTime;
+        if (thinkTimer > 0f) return;
         thinkTimer = thinkInterval;
 
-        //run decision logic
-        TickBrain();
+        Tick();
     }
 
-    private void TickBrain()
+    private void Tick()
     {
-        //if no player exists--do nothing
         if (!target)
         {
-            SetState(State.Idle);
-            return;
-        }
-
-        //calculate distance to player
-        float distance = Vector3.Distance(transform.position, target.position);
-
-        //lose aggro if too far
-        if(distance > loseAggroRange)
-        {
-            SetState(State.Idle);
+            state = State.Idle;
             motor.Stop();
             return;
         }
-        //player detected logic
-        if(distance <= aggroRange)
-        {
-            //if close enough and attack is ready then attack
-            if(distance <= attackRange && combat.IsReady)
-            {
-                SetState(State.Attack);
-                motor.Stop(); //stop moving before attacking
-                combat.TryAttack(target);
 
-                //immediately enter recovery state
-                SetState(State.Recover);
-                return;
-            }
-            //otherwise chase player
-            SetState(State.Chase);
-            motor.MoveTo(target.position);
+        Vector2 enemyPos = transform.position;
+        Vector2 playerPos = target.position;
+
+        float dx = Mathf.Abs(playerPos.x - enemyPos.x); // horizontal distance
+        float dy = Mathf.Abs(playerPos.y - enemyPos.y); // vertical distance
+
+        // Aggro based on X (side scroller)
+        if (dx > loseAggroRangeX)
+        {
+            state = State.Idle;
+            motor.Stop();
             return;
         }
 
-        //default fallback
-        SetState(State.Idle);
+        if (dx > aggroRangeX)
+        {
+            state = State.Idle;
+            motor.Stop();
+            return;
+        }
+
+        // Handle timed states
+        if (state == State.Windup || state == State.Recover)
+        {
+            stateTimer -= thinkInterval;
+
+            if (state == State.Windup)
+            {
+                motor.SetMoveSpeed(baseMoveSpeed * windupSpeedMultiplier);
+
+                // Step in toward the player during windup
+                motor.MoveTo(playerPos);
+
+                if (stateTimer <= 0f)
+                    state = State.Attack;
+
+                return;
+            }
+
+            if (state == State.Recover)
+            {
+                // Freeze after swing
+                motor.Stop();
+                motor.SetMoveSpeed(baseMoveSpeed * chaseSpeedMultiplier);
+
+                if (stateTimer <= 0f)
+                    state = State.Chase;
+
+                return;
+            }
+        }
+
+        // Attack state: attempt once, then recover (or go back to chase if not ready)
+        if (state == State.Attack)
+        {
+            motor.Stop();
+
+            if (combat != null && combat.IsReady && dx <= attackRangeX)
+            {
+                combat.TryAttack(target);
+                state = State.Recover;
+                stateTimer = recoverTime;
+            }
+            else
+            {
+                state = State.Chase;
+            }
+
+            return;
+        }
+
+        // Normal chase/pacing
+        state = State.Chase;
+        motor.SetMoveSpeed(baseMoveSpeed * chaseSpeedMultiplier);
+
+        // If vertically close enough, align Y a bit (Castle Crashers style)
+        // This helps enemies “line up” rather than attack from weird heights.
+        Vector2 desiredPos = enemyPos;
+
+        if (dy <= alignRangeY && dy > alignDeadZoneY)
+        {
+            desiredPos.y = playerPos.y; // move toward player's Y
+        }
+
+        // Horizontal spacing logic
+        if (dx > engageDistanceX + deadZoneX)
+        {
+            // Too far: move in (to player x and maybe y)
+            desiredPos.x = playerPos.x;
+            motor.MoveTo(desiredPos);
+            return;
+        }
+
+        // Close enough: hold position (don't push into player)
         motor.Stop();
 
+        // If in attack range and ready, start windup burst
+        if (dx <= attackRangeX && combat != null && combat.IsReady)
+        {
+            state = State.Windup;
+            stateTimer = windupTime;
+        }
     }
 
-    private void SetState(State next)
-    {
-        // Prevent unnecessary switching
-        if (currentState == next)
-            return;
-
-        currentState = next;
-
-        // Later:
-        // animator.SetBool("IsMoving", next == State.Chase);
-    }
-
-    //debug visuals
     private void OnDrawGizmosSelected()
     {
-        // Yellow = detection range
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, aggroRange);
+        // For side scroller, X ranges are more useful drawn as lines.
+        Vector3 pos = transform.position;
 
-        // Red = attack range
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, attackRange);
+        Gizmos.color = new Color(1f, 1f, 0f, 0.7f); // aggro
+        Gizmos.DrawLine(pos + Vector3.left * aggroRangeX, pos + Vector3.right * aggroRangeX);
 
-        // Gray = aggro loss range
-        Gizmos.color = Color.gray;
-        Gizmos.DrawWireSphere(transform.position, loseAggroRange);
+        Gizmos.color = new Color(1f, 0f, 0f, 0.8f); // attack range
+        Gizmos.DrawLine(pos + Vector3.left * attackRangeX, pos + Vector3.right * attackRangeX);
     }
-
 }

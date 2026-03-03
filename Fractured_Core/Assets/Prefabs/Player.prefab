@@ -139,7 +139,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 5
   allowVerticalMovement: 1
-  dashSpeed: 12
+  dashSpeed: 15
   dashDuration: 0.15
   dashCooldown: 2
 --- !u!114 &2399208212444601741
@@ -221,7 +221,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1c710cbc55ad234e82b9443f32ab673, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentUlt: 0
+  currentUltCharge: 0
   maxUlt: 50
   ultPerHit: 10
   flurryRadius: 2

@@ -2,52 +2,110 @@ using UnityEngine;
 
 public class EnemyCombat : MonoBehaviour
 {
-    [SerializeField] private float cooldown = 1.25f;
-    [SerializeField] private float windupTime = 0.15f;
-    [SerializeField] private int damage = 1;
+    [Header("Damage")]
+    [SerializeField] private float damage = 1f;
+
+    [Header("Timing")]
+    [SerializeField] private float cooldown = 1.0f;//time between attacks
+    [SerializeField] private float windupTime = 0.15f; //delay before hit happens (should feel like windup)
+
+    [Header("Hitbox")]
+    [SerializeField] private Transform hitboxOrigin; //where the hitbox is centered (in front on enemy)
+    [SerializeField] private float hitboxRadius = 0.6f; //size of hit area
+    [SerializeField] private LayerMask playerLayer; //set this to Player layer
+
+    [Header("Optional Animation")]
+    [SerializeField] private Animator animator;
+    [SerializeField] private string attackTriggerName = "Attack";
+
+    private Vector3 originalHitboxLocalPos;
+    private SpriteRenderer sprite;
 
     private float nextReadyTime;
 
-    // Property = read-only access
+    //enemy brain reads this
     public bool IsReady => Time.time >= nextReadyTime;
 
-    private Transform pendingTarget;
+    private void Awake()
+    {
+        if(hitboxOrigin != null)
+        {
+            originalHitboxLocalPos = hitboxOrigin.localPosition;
+        }
+        sprite = GetComponentInChildren<SpriteRenderer>();
+    }
 
-    // Called by EnemyBrain
+    private void Update()
+    {
+        if (hitboxOrigin == null || sprite == null) return;
+
+        // If sprite is flipped, mirror hitbox on X axis
+        if (sprite.flipX)
+        {
+            hitboxOrigin.localPosition =
+                new Vector3(-Mathf.Abs(originalHitboxLocalPos.x),
+                            originalHitboxLocalPos.y,
+                            originalHitboxLocalPos.z);
+        }
+        else
+        {
+            hitboxOrigin.localPosition =
+                new Vector3(Mathf.Abs(originalHitboxLocalPos.x),
+                            originalHitboxLocalPos.y,
+                            originalHitboxLocalPos.z);
+        }
+    }
+
+    //called by EnemyBrain when it decides to attack
     public void TryAttack(Transform target)
     {
-        // Prevent attack spam
-        if (!IsReady || target == null)
-            return;
+        
+        if (!IsReady) return;
 
+        //start cooldown immediately so there's no spam
         nextReadyTime = Time.time + cooldown;
 
-        pendingTarget = target;
-
-        // Simulate attack animation delay
-        Invoke(nameof(ApplyHit), windupTime);
-    }
-
-    private void ApplyHit()
-    {
-        if (!pendingTarget)
-            return;
-
-        // Look for damageable component
-        IDamageable damageable =
-            pendingTarget.GetComponent<IDamageable>();
-
-        if (damageable != null)
+        //play attack animations
+        if(animator != null && !string.IsNullOrEmpty(attackTriggerName))
         {
-            damageable.TakeDamage(damage);
+            animator.SetTrigger(attackTriggerName);
         }
 
-        pendingTarget = null;
+        //delay the hit slightly so it matches up with animation windup
+        Invoke(nameof(DoHit), windupTime);
     }
+
+    //this acutally applies damage if the player is inside the hitbox
+    private void DoHit()
+    {
+        if(hitboxOrigin == null)
+        {
+            Debug.LogWarning("EnemyCombat: hitboxOrigin is not assigned.");
+            return;
+        }
+
+        //find all colliders in a circle around the hitbox origin (2D physics)
+        Collider2D hit = Physics2D.OverlapCircle(hitboxOrigin.position, hitboxRadius, playerLayer);
+        if(hit == null)
+        {
+            return; //player not in range at the hit moment
+        }
+
+        //deal damage if that object can take damage
+        PlayerHealth playerHealth = hit.GetComponent<PlayerHealth>();
+        if(playerHealth != null)
+        {
+            playerHealth.TakeDamage(damage);
+        }
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        if (hitboxOrigin == null) return;
+
+        Gizmos.color = Color.cyan;
+        Gizmos.DrawWireSphere(hitboxOrigin.position, hitboxRadius);
+    }
+
 }
 
-// Interface = contract for anything that can take damage
-public interface IDamageable
-{
-    void TakeDamage(int amount);
-}

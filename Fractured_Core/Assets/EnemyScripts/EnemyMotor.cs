@@ -1,64 +1,60 @@
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody2D))]
 public class EnemyMotor : MonoBehaviour
 {
     [SerializeField] private float moveSpeed = 3f;
-
+    [SerializeField] private float stopDistance = 1.4f;
     [SerializeField] private SpriteRenderer sprite;
 
+    private Rigidbody2D rb;
     private bool isMoving;
-    private Vector3 destination;
+    private Vector2 destination;
 
-    //called by enemy brain
+    public float MoveSpeed => moveSpeed; //allows brain to read base speed
+
+    public void SetMoveSpeed(float newSpeed) 
+    { 
+        moveSpeed = newSpeed; //allows brain to modify it
+    } 
+
+    private void Awake()
+    {
+        rb = GetComponent<Rigidbody2D>();
+    }
+
     public void MoveTo(Vector3 worldPos)
     {
-        destination = worldPos;
+        destination = worldPos; // Vector3 -> Vector2 implicit drops Z
         isMoving = true;
     }
 
-    //stop movement
     public void Stop()
     {
         isMoving = false;
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
-        if (!isMoving)
-        {
-            return;
-        }
+        if (!isMoving) return;
 
-        Vector3 currentPos = transform.position;
+        Vector2 currentPos = rb.position;
+        Vector2 toTarget = destination - currentPos;
 
-        //keep z constant
-        destination.z = currentPos.z;
-
-        //direction toward target
-        Vector3 direction = destination - currentPos;
-        
-        if(sprite != null && direction.x != 0)
-        {
-            //if moving left flip sprite
-            //if moving right normal sprite
-
-            sprite.flipX= direction.x < 0;
-        }
-
-        //stop if very close
-        if(direction.sqrMagnitude < 0.01f)
+        // Stop before overlapping player
+        if (toTarget.magnitude <= stopDistance)
         {
             isMoving = false;
             return;
         }
 
-        //move forward toward player
-        Vector3 step = direction.normalized * moveSpeed * Time.deltaTime;
-        transform.position += step;
+        // Flip sprite left/right
+        if (sprite != null && Mathf.Abs(toTarget.x) > 0.01f)
+            sprite.flipX = toTarget.x < 0f;
 
-        transform.position += step;
-
-        
-
+        Vector2 step = toTarget.normalized * moveSpeed * Time.fixedDeltaTime;
+        rb.MovePosition(currentPos + step);
     }
+
+
 }

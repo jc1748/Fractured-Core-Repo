@@ -10,10 +10,12 @@ GameObject:
   m_Component:
   - component: {fileID: 812104918793562199}
   - component: {fileID: 672402783156129387}
-  - component: {fileID: 2857574392881455294}
   - component: {fileID: 8318211903028710071}
   - component: {fileID: 5370702543885602894}
   - component: {fileID: 6402194224796624484}
+  - component: {fileID: 7428682827847348182}
+  - component: {fileID: 3328308645709659489}
+  - component: {fileID: 1905273445948028061}
   m_Layer: 6
   m_Name: EnemyTest
   m_TagString: Enemy
@@ -35,6 +37,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1359037504955680113}
+  - {fileID: 2903042043049571894}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &672402783156129387
@@ -92,19 +95,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &2857574392881455294
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 940748742133024128}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f3acb8caf65fef74e8e7c4daad7b6b0a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  contactDamage: 2
 --- !u!114 &8318211903028710071
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -191,6 +181,71 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 1, y: 2}
   m_Direction: 0
+--- !u!114 &7428682827847348182
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 940748742133024128}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ef8cfc405bf15b4f8991be422c8f95f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  aggroRangeX: 8
+  loseAggroRangeX: 10
+  thinkInterval: 0.05
+  engageDistanceX: 1.6
+  attackRangeX: 2
+  deadZoneX: 0.15
+  alignRangeY: 2.5
+  alignDeadZoneY: 0.15
+  windupTime: 0.25
+  recoverTime: 0.25
+  chaseSpeedMultiplier: 1
+  windupSpeedMultiplier: 1.8
+  target: {fileID: 0}
+  motor: {fileID: 1905273445948028061}
+  combat: {fileID: 3328308645709659489}
+  state: 0
+--- !u!114 &3328308645709659489
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 940748742133024128}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa735ec5b0905b943a56a1e5e8b4392f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 1
+  cooldown: 1.25
+  windupTime: 0.15
+  hitboxOrigin: {fileID: 2903042043049571894}
+  hitboxRadius: 0.6
+  playerLayer:
+    serializedVersion: 2
+    m_Bits: 8
+  animator: {fileID: 0}
+  attackTriggerName: Attack
+--- !u!114 &1905273445948028061
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 940748742133024128}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d5e67ef92ccab740a288e3fcae15c7e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveSpeed: 3
+  stopDistance: 1.4
+  sprite: {fileID: 672402783156129387}
 --- !u!1 &6386807109247966185
 GameObject:
   m_ObjectHideFlags: 0
@@ -278,3 +333,34 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &8317591983429583226
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2903042043049571894}
+  m_Layer: 6
+  m_Name: HitBoxOrigin
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2903042043049571894
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8317591983429583226}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.45, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 812104918793562199}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
