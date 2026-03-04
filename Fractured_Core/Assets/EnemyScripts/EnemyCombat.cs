@@ -116,6 +116,12 @@ public class EnemyCombat : MonoBehaviour
     public void CancelAttack()
     {
         CancelInvoke(nameof(DoHit));
+
+        if(animator != null)
+        {
+            animator.ResetTrigger(attackTriggerName);
+            //animator.Play("Idle"); --play the idle animation 
+        }
     }
 
     private void OnDrawGizmosSelected()

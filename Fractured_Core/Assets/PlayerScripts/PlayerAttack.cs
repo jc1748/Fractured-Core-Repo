@@ -29,6 +29,12 @@ public class PlayerAttack : MonoBehaviour
     public SpriteRenderer attackIndicator; //visual circle indicator
     public Color indicatorColor = new Color(1, 1, 0, 0.25f); //transparent yellow
 
+    [Header("Attack Animation Frames")]
+    private float pendingRange;
+    private int pendingBaseDamage;
+    private float pendingHitstun;
+    private bool hitQueued;
+
     [Header("Ultimate Settings")]
     private PlayerUltimate playerUltimate; //reference to ult system
 
@@ -42,6 +48,11 @@ public class PlayerAttack : MonoBehaviour
     [Header("Hitstun Settings")]
     public float attack1Hitstun = 0.10f; //short hitstun for light attack
     public float attack2Hitstun = 0.18f; //longer stun for heavy attack
+
+    [Header("Hitstop Settings")]
+    public float hitstopOnHit = 0.04f; //0.03-0.06 feels good
+    public float attack1Hitstop = 0.035f;
+    public float attack2Hitstop = 0.055f;
 
     void Awake()
     {
@@ -109,8 +120,26 @@ public class PlayerAttack : MonoBehaviour
             attackIndicator.gameObject.SetActive(true);
         }
 
+        //queue hit to happen on animation impact frame
+        pendingRange = range;
+        pendingBaseDamage = baseDamage;
+        pendingHitstun = hitstun;
+        hitQueued = true;
+
+    }
+
+    //this method lets the damage be applied during the impact frame on the animation, instead of the entire animation playing through
+    public void AnimEvent_DoHit()
+    {
+        if (!hitQueued)
+        {
+            return;
+        }
+
+        hitQueued = false;
+
         //detect all enemies within circular attack range
-        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, range, enemyLayers);
+        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, pendingRange, enemyLayers);
 
         //loop through all enemies hit
         foreach (Collider2D enemy in hitEnemies)
@@ -119,20 +148,28 @@ public class PlayerAttack : MonoBehaviour
             if (eh == null) continue;
 
             //start with base damage
-            int totalDamage = baseDamage;
+            int totalDamage = pendingBaseDamage;
 
             //if stats exist, apply strength multiplier
             if (playerStats != null)
             {
-                float scaled = baseDamage * playerStats.GetDamageMultiplier();
+                float scaled = pendingBaseDamage * playerStats.GetDamageMultiplier();
                 totalDamage = Mathf.RoundToInt(scaled); //convert float to int
             }
 
             //apply damage and check if damage actually happened
-            bool didDamage = eh.TakeDamage(totalDamage, hitstun);
+            bool didDamage = eh.TakeDamage(totalDamage, pendingHitstun);
 
             if (didDamage)
             {
+                //hitstop on enemy
+                HitstopReceiver enemyStop = enemy.GetComponentInParent<HitstopReceiver>();
+                if(enemyStop != null)
+                {
+                    enemyStop.DoHitstop(hitstopOnHit);
+                }
+
+                
                 //add XP
                 if (playerXP != null)
                     playerXP.AddXP(xpPerHit);
@@ -142,5 +179,6 @@ public class PlayerAttack : MonoBehaviour
                     playerUltimate.GainUltFromHit();
             }
         }
+
     }
 }

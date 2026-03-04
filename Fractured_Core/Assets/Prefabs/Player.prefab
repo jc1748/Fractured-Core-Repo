@@ -171,8 +171,8 @@ MonoBehaviour:
   attackIndicator: {fileID: 0}
   indicatorColor: {r: 1, g: 1, b: 0, a: 0.25}
   xpPerHit: 1
-  attack1Hitstun: 0.25
-  attack2Hitstun: 0.3
+  attack1Hitstun: 0.12
+  attack2Hitstun: 0.18
 --- !u!114 &4530050793686383146
 MonoBehaviour:
   m_ObjectHideFlags: 0

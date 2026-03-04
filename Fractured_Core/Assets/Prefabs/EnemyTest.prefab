@@ -52,15 +52,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8934bd07571970c48996b45e54c6a1d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyMaxHealth: 50
+  enemyMaxHealth: 10
   healthBar: {fileID: 1359037504955680113}
-  defaultHitstun: 0.5
-  attackLockoutAfterHit: 0.3
+  defaultHitstun: 0.25
+  attackLockoutAfterHit: 0.25
   spriteRenderer: {fileID: 1306705988807508302}
   flashColor: {r: 1, g: 0, b: 0, a: 1}
   flashDuration: 0.25
-  healthPickupPrefab: {fileID: 0}
+  healthPickupPrefab: {fileID: 272027132516990277, guid: 8d85ebd9b3b6f1d46926d07ae72afa92, type: 3}
   dropChance: 1
+  animator: {fileID: 0}
   damageNumberPrefab: {fileID: 0}
   worldSpaceCanvas: {fileID: 0}
 --- !u!50 &5370702543885602894

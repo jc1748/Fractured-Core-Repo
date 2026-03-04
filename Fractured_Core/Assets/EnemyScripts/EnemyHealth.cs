@@ -32,6 +32,8 @@ public class EnemyHealth : MonoBehaviour
 
     private EnemyCombat combat; //used to cancel queued hits
 
+    [SerializeField] private Animator animator; //enemy animator
+
     private Rigidbody2D rb;
 
     public GameObject damageNumberPrefab;
@@ -47,6 +49,11 @@ public class EnemyHealth : MonoBehaviour
         if(spriteRenderer == null)
         {
             spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+        }
+
+        if(animator == null)
+        {
+            animator = GetComponentInChildren<Animator>();
         }
     }
 
@@ -110,6 +117,14 @@ public class EnemyHealth : MonoBehaviour
         ApplyHitstun(stunToApply);
         attackLockoutTimer = Mathf.Max(attackLockoutTimer, attackLockoutAfterHit);
 
+        //freeze animation when being hit
+        if(animator != null)
+        {
+            animator.speed = 0f; //pause animation while stunned
+            CancelInvoke(nameof(ResumeAnimator)); //avoid stacking
+            Invoke(nameof(ResumeAnimator), stunToApply);
+        }
+
 
         //flash white/red or play animation
 
@@ -157,6 +172,15 @@ public class EnemyHealth : MonoBehaviour
 
         StopCoroutine(nameof(FlashRed)); //prevents overlap spam
         StartCoroutine(FlashRed());
+    }
+
+    //enemy animation "stops" when hit and resumes after stun
+    private void ResumeAnimator()
+    {
+        if(animator != null)
+        {
+            animator.speed = 1f;
+        }
     }
 
     void Die()
