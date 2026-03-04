@@ -155,15 +155,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackPoint: {fileID: 4382511237380048286}
-  attackRange: 0.7
-  attackDamage: 1
-  attackRate: 2
+  attack1Key: 101
+  attack1Range: 0.7
+  attack1Damage: 1
+  attack1Rate: 2
+  attack1Trigger: attack
+  attack2Key: 113
+  attack2Range: 1
+  attack2Damage: 2
+  attack2Rate: 1.2
+  attack2Trigger: attack2
   enemyLayers:
     serializedVersion: 2
     m_Bits: 64
   attackIndicator: {fileID: 0}
   indicatorColor: {r: 1, g: 1, b: 0, a: 0.25}
   xpPerHit: 1
+  attack1Hitstun: 0.25
+  attack2Hitstun: 0.3
 --- !u!114 &4530050793686383146
 MonoBehaviour:
   m_ObjectHideFlags: 0

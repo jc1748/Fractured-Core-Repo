@@ -732,6 +732,14 @@ PrefabInstance:
       propertyPath: cameraShake
       value: 
       objectReference: {fileID: 704621880}
+    - target: {fileID: 2399208212444601741, guid: cc99c5ec914ae30438815ad7604f1758, type: 3}
+      propertyPath: attack1Hitstun
+      value: 0.12
+      objectReference: {fileID: 0}
+    - target: {fileID: 2399208212444601741, guid: cc99c5ec914ae30438815ad7604f1758, type: 3}
+      propertyPath: attack2Hitstun
+      value: 0.18
+      objectReference: {fileID: 0}
     - target: {fileID: 2614577182934004233, guid: cc99c5ec914ae30438815ad7604f1758, type: 3}
       propertyPath: m_Name
       value: Player
@@ -958,6 +966,14 @@ PrefabInstance:
       propertyPath: target
       value: 
       objectReference: {fileID: 776800247}
+    - target: {fileID: 8318211903028710071, guid: 8dd66218a3d7be346861160fefffc1f8, type: 3}
+      propertyPath: defaultHitstun
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 8318211903028710071, guid: 8dd66218a3d7be346861160fefffc1f8, type: 3}
+      propertyPath: attackLockoutAfterHit
+      value: 0.25
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

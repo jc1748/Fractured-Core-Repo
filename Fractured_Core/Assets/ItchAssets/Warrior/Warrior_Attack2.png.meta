@@ -124,10 +124,10 @@ TextureImporter:
       name: Warrior_Attack2_0
       rect:
         serializedVersion: 2
-        x: 40
-        y: 54
-        width: 83
-        height: 88
+        x: 0
+        y: 0
+        width: 192
+        height: 192
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -146,10 +146,10 @@ TextureImporter:
       name: Warrior_Attack2_1
       rect:
         serializedVersion: 2
-        x: 232
-        y: 54
-        width: 82
-        height: 91
+        x: 192
+        y: 0
+        width: 192
+        height: 192
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -168,10 +168,10 @@ TextureImporter:
       name: Warrior_Attack2_2
       rect:
         serializedVersion: 2
-        x: 441
-        y: 39
-        width: 102
-        height: 103
+        x: 384
+        y: 0
+        width: 192
+        height: 192
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -190,10 +190,10 @@ TextureImporter:
       name: Warrior_Attack2_3
       rect:
         serializedVersion: 2
-        x: 632
-        y: 40
-        width: 83
-        height: 103
+        x: 576
+        y: 0
+        width: 192
+        height: 192
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -208,99 +208,11 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
-    - serializedVersion: 2
-      name: Warrior_Attack2_4
-      rect:
-        serializedVersion: 2
-        x: 716
-        y: 114
-        width: 8
-        height: 9
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: a4876c9087c818b40800000000000000
-      internalID: 5440784272028235850
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Warrior_Attack2_5
-      rect:
-        serializedVersion: 2
-        x: 728
-        y: 97
-        width: 8
-        height: 17
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 7d2a1deabdb158e60800000000000000
-      internalID: 7963802146419352279
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Warrior_Attack2_6
-      rect:
-        serializedVersion: 2
-        x: 431
-        y: 49
-        width: 19
-        height: 17
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 1a76d6b5d29ed2fa0800000000000000
-      internalID: -5823742362103486559
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Warrior_Attack2_7
-      rect:
-        serializedVersion: 2
-        x: 700
-        y: 45
-        width: 35
-        height: 43
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: decdf4a2ffcaf0800800000000000000
-      internalID: 580873088880598253
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
     outline: []
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 8ce8d37ed6a29af459fb43cab78590fe
     internalID: 0
     vertices: []
     indices: 
@@ -314,10 +226,6 @@ TextureImporter:
       Warrior_Attack2_1: 2678504405838677843
       Warrior_Attack2_2: 3934996648058365938
       Warrior_Attack2_3: 747109334637763536
-      Warrior_Attack2_4: 5440784272028235850
-      Warrior_Attack2_5: 7963802146419352279
-      Warrior_Attack2_6: -5823742362103486559
-      Warrior_Attack2_7: 580873088880598253
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

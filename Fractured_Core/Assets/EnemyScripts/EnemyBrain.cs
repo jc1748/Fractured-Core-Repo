@@ -30,6 +30,7 @@ public class EnemyBrain : MonoBehaviour
     [SerializeField] private Transform target;
     [SerializeField] private EnemyMotor motor;
     [SerializeField] private EnemyCombat combat;
+    [SerializeField] private EnemyHealth enemyHealth;
 
     [Header("Debug")]
     [SerializeField] private State state = State.Idle;
@@ -43,8 +44,8 @@ public class EnemyBrain : MonoBehaviour
     {
         if (!motor) motor = GetComponent<EnemyMotor>();
         if (!combat) combat = GetComponent<EnemyCombat>();
+        if (!enemyHealth) enemyHealth = GetComponent<EnemyHealth>();
 
-        // We need EnemyMotor to expose MoveSpeed and SetMoveSpeed (small change below)
         baseMoveSpeed = motor.MoveSpeed;
     }
 
@@ -68,6 +69,20 @@ public class EnemyBrain : MonoBehaviour
 
     private void Tick()
     {
+        //if hitstunned or attack-locked, freeze behavior and cancel any queued attack
+        if(enemyHealth != null && (enemyHealth.IsStunned || enemyHealth.AttackLocked))
+        {
+            motor.Stop();
+            
+            if(combat != null)
+            {
+                combat.CancelAttack(); //prevents "i got hit but still hit you" moment
+            }
+
+            return;
+        }
+
+
         if (!target)
         {
             state = State.Idle;

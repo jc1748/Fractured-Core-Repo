@@ -18,6 +18,8 @@ public class EnemyCombat : MonoBehaviour
     [SerializeField] private Animator animator;
     [SerializeField] private string attackTriggerName = "Attack";
 
+    private EnemyHealth health; //reference to enemy health (for stun checks)
+
     private Vector3 originalHitboxLocalPos;
     private SpriteRenderer sprite;
 
@@ -37,6 +39,8 @@ public class EnemyCombat : MonoBehaviour
         //auto-find animator so Attack trigger works
         if (animator == null)
             animator = GetComponentInChildren<Animator>();
+
+        health = GetComponent<EnemyHealth>();
     }
 
     private void Update()
@@ -63,7 +67,12 @@ public class EnemyCombat : MonoBehaviour
     //called by EnemyBrain when it decides to attack
     public void TryAttack(Transform target)
     {
-        
+        //don't let enemy start an attack while stunned
+        if(health !=null && (health.IsStunned || health.AttackLocked))
+        {
+            return;
+        }
+
         if (!IsReady) return;
 
         //start cooldown immediately so there's no spam
@@ -101,6 +110,12 @@ public class EnemyCombat : MonoBehaviour
         {
             playerHealth.TakeDamage(damage);
         }
+    }
+
+    //stops an attack that was already queued up(windup invoke)
+    public void CancelAttack()
+    {
+        CancelInvoke(nameof(DoHit));
     }
 
     private void OnDrawGizmosSelected()

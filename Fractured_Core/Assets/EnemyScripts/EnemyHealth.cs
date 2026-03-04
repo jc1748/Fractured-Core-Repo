@@ -4,11 +4,17 @@ public class EnemyHealth : MonoBehaviour
 {
     public float enemyMaxHealth = 5f;
     private float currentHealth= 5f;
-    public float launchForce = 6f;
 
     [Header("Health Bar")]
     public Transform healthBar;   // assign a child object (sprite) in Inspector
     private Vector3 originalScale;
+
+    [Header("Hitstun Settings")]
+    [SerializeField] private float defaultHitstun = 0.12f; //how long enemy freezes when hit
+
+    [SerializeField] private float attackLockoutAfterHit = 0.15f; //extra time enemy cant attack after hit
+    private float attackLockoutTimer; //counts down lockout
+    public bool AttackLocked => attackLockoutTimer > 0f;
 
     [Header("Flash settings")]
     public SpriteRenderer spriteRenderer;//assign enemy sprite
@@ -21,16 +27,31 @@ public class EnemyHealth : MonoBehaviour
 
 
     private Color originalColor;
+    private float stunTimer; //counts down stun time
+    public bool IsStunned => stunTimer > 0f;
+
+    private EnemyCombat combat; //used to cancel queued hits
 
     private Rigidbody2D rb;
 
     public GameObject damageNumberPrefab;
-
     public Canvas worldSpaceCanvas;
+
+    private void Awake()
+    {
+        rb = GetComponent<Rigidbody2D>();
+
+        combat = GetComponent<EnemyCombat>();
+
+        //auto find sprite renderer
+        if(spriteRenderer == null)
+        {
+            spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+        }
+    }
 
     void Start()
     {
-        
         currentHealth = enemyMaxHealth;
         if (healthBar != null)
         {
@@ -41,70 +62,30 @@ public class EnemyHealth : MonoBehaviour
         {
             originalColor = spriteRenderer.color;
         }
-        rb = GetComponent<Rigidbody2D>();//required or else capsule won't fly
 
     }
 
-    public bool TakeLaunchDamage(int damage)
+    private void Update()
     {
-        if (damage <= 0)
+        //count down hitstun timeer
+        if(stunTimer > 0f)
         {
-            return false;
+            stunTimer -= Time.deltaTime;
         }
 
-        if (currentHealth <= 0)
+        if (attackLockoutTimer > 0f)
         {
-            return false;
+            attackLockoutTimer -= Time.deltaTime;
         }
-
-
-        currentHealth -= damage;
-
-        // pop enemy upward
-        if (rb != null)
-        {
-            rb.linearVelocity = new Vector2(rb.linearVelocity.x, 0);
-            rb.AddForce(Vector2.up * launchForce, ForceMode2D.Impulse);
-        }
-
-        // UI damage for launch attack
-        if (damageNumberPrefab != null && worldSpaceCanvas != null)
-        {
-            // spawn higher
-            Vector3 spawnPos = transform.position + Vector3.up * 1.5f;
-
-            GameObject num = Instantiate(damageNumberPrefab, worldSpaceCanvas.transform);
-            num.transform.position = spawnPos;
-
-            DamageNumber dn = num.GetComponent<DamageNumber>();
-            dn.SetDamage(damage);
-
-            //COMBO-SCALED SIZE VERY NOTICEABLE
-            float launchScale = 1.5f * ComboManager.instance.damageMultiplier;
-            dn.SetScale(launchScale);
-        }
-        //update healthbar,flash,etc.
-        if (healthBar != null)
-        {
-            float healthPercent = Mathf.Clamp01(currentHealth / enemyMaxHealth);
-            healthBar.localScale = new Vector3(originalScale.x * healthPercent, originalScale.y, originalScale.z);
-        }
-
-        if (spriteRenderer != null)
-        {
-            StartCoroutine(FlashRed());
-        }
-
-        if (currentHealth <= 0)
-        {
-            Die();
-        }
-
-        return true;
-
     }
 
-    public bool TakeDamage(int damage)
+    //applies hitstun (keeps the longer stun if multiple hits happen fast
+    private void ApplyHitstun(float duration)
+    {
+        stunTimer = duration; //refresh stun each time you get hit
+    }
+
+    public bool TakeDamage(int damage, float hitstun = -1f)
     {
         if (damage <= 0)
         {
@@ -116,7 +97,18 @@ public class EnemyHealth : MonoBehaviour
             return false;//already dead
         }
 
+        //stop enemy from finishing a queued hit
+        if(combat != null)
+        {
+            combat.CancelAttack();
+        }
+
         currentHealth -= damage;
+
+        //apply hitstun
+        float stunToApply = (hitstun < 0f) ? defaultHitstun : hitstun;
+        ApplyHitstun(stunToApply);
+        attackLockoutTimer = Mathf.Max(attackLockoutTimer, attackLockoutAfterHit);
 
 
         //flash white/red or play animation
@@ -138,20 +130,10 @@ public class EnemyHealth : MonoBehaviour
             dn.SetScale(ComboManager.instance.damageMultiplier);
 
         }
-   
-        if (healthBar != null)
-        {
-            float healthPercent = Mathf.Clamp01(currentHealth / enemyMaxHealth);
-            healthBar.localScale = new Vector3(originalScale.x * healthPercent, originalScale.y, originalScale.z);
-        }
 
-        if(spriteRenderer != null)
-        {
-            StartCoroutine(FlashRed());
-        }
-
-        
-
+        UpdateHealthBar();
+        TriggerFlash();
+  
         //check death
         if (currentHealth <= 0) 
         {
@@ -159,6 +141,22 @@ public class EnemyHealth : MonoBehaviour
         }
 
         return true; //damage applied
+    }
+
+    private void UpdateHealthBar()
+    {
+        if (healthBar == null) return;
+
+        float healthPercent = Mathf.Clamp01(currentHealth / enemyMaxHealth);
+        healthBar.localScale = new Vector3(originalScale.x * healthPercent, originalScale.y, originalScale.z);
+    }
+
+    private void TriggerFlash()
+    {
+        if (spriteRenderer == null) return;
+
+        StopCoroutine(nameof(FlashRed)); //prevents overlap spam
+        StartCoroutine(FlashRed());
     }
 
     void Die()
