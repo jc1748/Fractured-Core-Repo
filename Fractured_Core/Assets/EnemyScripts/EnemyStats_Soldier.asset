@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e7261340389c7b43b5421fbd63cd16c, type: 3}
+  m_Name: EnemyStats_Soldier
+  m_EditorClassIdentifier: 
+  maxHealth: 5
+  moveSpeed: 3
+  stopDistance: 1.4
+  aggroRangeX: 8
+  loseAggroRangeX: 10
+  engageDistanceX: 1.6
+  attackRangeX: 2
+  alignRangeY: 2.5
+  alignDeadZoneY: 0.15
+  damage: 1
+  cooldown: 1
+  windupTime: 0.15
+  hitboxRadius: 0.6
+  chaseSpeedMultiplier: 1
+  windupSpeedMultiplier: 1.8
+  defaultHitstun: 0.12
+  attackLockoutAfterHit: 0.18

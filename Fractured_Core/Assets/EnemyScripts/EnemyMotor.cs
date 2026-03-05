@@ -72,5 +72,13 @@ public class EnemyMotor : MonoBehaviour
         rb.MovePosition(currentPos + step);
     }
 
+    public void ApplyStats(EnemyStats stats)
+    {
+        if(stats == null) return;
+
+        moveSpeed = stats.moveSpeed; //set speed
+        stopDistance = stats.stopDistance; //set spacing
+    }
+
 
 }

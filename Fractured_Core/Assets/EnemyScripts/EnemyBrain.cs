@@ -32,6 +32,9 @@ public class EnemyBrain : MonoBehaviour
     [SerializeField] private EnemyCombat combat;
     [SerializeField] private EnemyHealth enemyHealth;
 
+    [Header("Stats")]
+    [SerializeField] private EnemyStats stats; 
+
     [Header("Debug")]
     [SerializeField] private State state = State.Idle;
 
@@ -47,6 +50,26 @@ public class EnemyBrain : MonoBehaviour
         if (!enemyHealth) enemyHealth = GetComponent<EnemyHealth>();
 
         baseMoveSpeed = motor.MoveSpeed;
+
+        //apply stats into the other components
+        if (stats != null)
+        {
+            motor.ApplyStats(stats);
+            combat.ApplyStats(stats);
+
+            //update brain tuning values from stats
+            aggroRangeX = stats.aggroRangeX;
+            loseAggroRangeX = stats.loseAggroRangeX;
+            engageDistanceX = stats.engageDistanceX;
+            attackRangeX = stats.attackRangeX;
+
+            alignRangeY = stats.alignRangeY;
+            alignDeadZoneY = stats.alignDeadZoneY;
+
+            chaseSpeedMultiplier = stats.chaseSpeedMultiplier;
+            windupSpeedMultiplier = stats.windupSpeedMultiplier;
+        }
+
     }
 
     private void Start()

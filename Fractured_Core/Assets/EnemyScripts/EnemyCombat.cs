@@ -132,5 +132,15 @@ public class EnemyCombat : MonoBehaviour
         Gizmos.DrawWireSphere(hitboxOrigin.position, hitboxRadius);
     }
 
+    public void ApplyStats(EnemyStats stats)
+    {
+        if (stats == null) return;
+
+        damage = stats.damage;         //how hard enemy hits
+        cooldown = stats.cooldown;     //time between attacks
+        windupTime = stats.windupTime; //sync with animation timing
+        hitboxRadius = stats.hitboxRadius;
+    }
+
 }
 

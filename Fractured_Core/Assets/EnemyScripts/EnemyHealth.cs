@@ -10,9 +10,9 @@ public class EnemyHealth : MonoBehaviour
     private Vector3 originalScale;
 
     [Header("Hitstun Settings")]
-    [SerializeField] private float defaultHitstun = 0.12f; //how long enemy freezes when hit
+    [SerializeField] private float defaultHitstun = 0f; //how long enemy freezes when hit
 
-    [SerializeField] private float attackLockoutAfterHit = 0.15f; //extra time enemy cant attack after hit
+    [SerializeField] private float attackLockoutAfterHit = 0f; //extra time enemy cant attack after hit
     private float attackLockoutTimer; //counts down lockout
     public bool AttackLocked => attackLockoutTimer > 0f;
 
@@ -203,5 +203,16 @@ public class EnemyHealth : MonoBehaviour
         yield return new WaitForSeconds(flashDuration);
         spriteRenderer.color = originalColor;
     }
-    
+
+    public void ApplyStats(EnemyStats stats)
+    {
+        if (stats == null) return;
+
+        enemyMaxHealth = stats.maxHealth; //set max hp
+        currentHealth = enemyMaxHealth;   //reset current hp
+
+        defaultHitstun = stats.defaultHitstun;
+        attackLockoutAfterHit = stats.attackLockoutAfterHit;
+    }
+
 }
