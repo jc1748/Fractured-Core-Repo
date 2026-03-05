@@ -121,7 +121,7 @@ MonoBehaviour:
   motor: {fileID: 1905273445948028061}
   combat: {fileID: 3328308645709659489}
   enemyHealth: {fileID: 8318211903028710071}
-  stats: {fileID: 11400000, guid: 53621aa70764aca41b6049e09b7d391a, type: 2}
+  stats: {fileID: 11400000, guid: 16d400e00f4ecdc419e60e0c4610851f, type: 2}
   state: 0
 --- !u!114 &3328308645709659489
 MonoBehaviour:

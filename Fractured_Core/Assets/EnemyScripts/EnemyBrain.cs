@@ -49,8 +49,6 @@ public class EnemyBrain : MonoBehaviour
         if (!combat) combat = GetComponent<EnemyCombat>();
         if (!enemyHealth) enemyHealth = GetComponent<EnemyHealth>();
 
-        baseMoveSpeed = motor.MoveSpeed;
-
         //apply stats into the other components
         if (stats != null)
         {
@@ -58,6 +56,12 @@ public class EnemyBrain : MonoBehaviour
             combat.ApplyStats(stats);
 
             //update brain tuning values from stats
+            EnemyHealth eh = GetComponent<EnemyHealth>();
+            if (eh != null)
+            {
+                eh.ApplyStats(stats);
+            }
+
             aggroRangeX = stats.aggroRangeX;
             loseAggroRangeX = stats.loseAggroRangeX;
             engageDistanceX = stats.engageDistanceX;
@@ -69,6 +73,8 @@ public class EnemyBrain : MonoBehaviour
             chaseSpeedMultiplier = stats.chaseSpeedMultiplier;
             windupSpeedMultiplier = stats.windupSpeedMultiplier;
         }
+
+        baseMoveSpeed = motor.MoveSpeed;
 
     }
 

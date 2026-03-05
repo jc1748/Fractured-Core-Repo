@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: EnemyStats_Grunt
   m_EditorClassIdentifier: 
   maxHealth: 3
-  moveSpeed: 4.5
+  moveSpeed: 5
   stopDistance: 1.4
   aggroRangeX: 8
   loseAggroRangeX: 10

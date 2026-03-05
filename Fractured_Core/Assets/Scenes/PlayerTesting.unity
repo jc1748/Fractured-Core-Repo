@@ -253,6 +253,57 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!1 &253011172
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 253011174}
+  - component: {fileID: 253011173}
+  m_Layer: 0
+  m_Name: EnemySpawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &253011173
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 253011172}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f98c3ce8cc3319548b4a323b88b5b57f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyPrefabs:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  spawnPoints: []
+  enemiesToSpawn: 3
+--- !u!4 &253011174
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 253011172}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.4997528, y: -1.7054547, z: 0.003637969}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &341248305
 GameObject:
   m_ObjectHideFlags: 0
@@ -1167,11 +1218,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 812104918793562199, guid: 8dd66218a3d7be346861160fefffc1f8, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2.37
+      value: 2.84
       objectReference: {fileID: 0}
     - target: {fileID: 812104918793562199, guid: 8dd66218a3d7be346861160fefffc1f8, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -2.47
+      value: -2.6
       objectReference: {fileID: 0}
     - target: {fileID: 812104918793562199, guid: 8dd66218a3d7be346861160fefffc1f8, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1209,10 +1260,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy_Soldier
       objectReference: {fileID: 0}
-    - target: {fileID: 940748742133024128, guid: 8dd66218a3d7be346861160fefffc1f8, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 7428682827847348182, guid: 8dd66218a3d7be346861160fefffc1f8, type: 3}
       propertyPath: target
       value: 
@@ -1237,3 +1284,4 @@ SceneRoots:
   - {fileID: 1776367197}
   - {fileID: 717039280}
   - {fileID: 341248307}
+  - {fileID: 253011174}

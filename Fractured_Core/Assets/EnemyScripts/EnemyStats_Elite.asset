@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: EnemyStats_Elite
   m_EditorClassIdentifier: 
   maxHealth: 12
-  moveSpeed: 2
+  moveSpeed: 1
   stopDistance: 1.4
   aggroRangeX: 8
   loseAggroRangeX: 10
@@ -24,7 +24,7 @@ MonoBehaviour:
   damage: 3
   cooldown: 1.6
   windupTime: 0.25
-  hitboxRadius: 0.6
+  hitboxRadius: 0.9
   chaseSpeedMultiplier: 1
   windupSpeedMultiplier: 1.4
   defaultHitstun: 0.12
