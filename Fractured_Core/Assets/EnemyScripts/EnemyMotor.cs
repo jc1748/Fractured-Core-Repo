@@ -3,6 +3,7 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public class EnemyMotor : MonoBehaviour
 {
+    [Header("Movement")]
     [SerializeField] private float moveSpeed = 3f;
     [SerializeField] private float stopDistance = 1.4f;
 
@@ -10,11 +11,24 @@ public class EnemyMotor : MonoBehaviour
     [SerializeField] private SpriteRenderer sprite;
     [SerializeField] private Animator animator; //controls idle and run
 
+    [Header("Knockback")]
+    [SerializeField] private float knockbackDrag = 18f; //how quickly knockback slows down over time, higher number = enemy stops sliding faster
+    [SerializeField] private float minimumKnockbackSpeed = 0.15f; //when knockback velocity becomes smaller than this, stop knockback completely
+    [SerializeField] private float bounceMultiplier = 0.45f; //how much velocity is kept when bouncing off a wall. ex 0.5 means bouceback with half the speed
+    [SerializeField] private float wallCheckDistance = 0.08f; //how far forwared we check for a wall
+    [SerializeField] private LayerMask bounceLayers; //which layers count as walls
+
     private Rigidbody2D rb;
     private bool isMoving;
     private Vector2 destination;
 
+    private bool isKnockedBack;
+    private Vector2 knockbackVelocity;
+    private float lastBounceTime;
+    private float bounceCooldown = 0.08f;
+
     public float MoveSpeed => moveSpeed; //allows brain to read base speed
+    public bool IsKnockedBack => isKnockedBack; //allows other scripts to check if enemy is knocked back
 
     public void SetMoveSpeed(float newSpeed) 
     { 
