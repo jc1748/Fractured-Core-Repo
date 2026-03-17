@@ -11,6 +11,7 @@ public class PlayerAttack : MonoBehaviour
     public int attack1Damage = 1;          //base damage before scaling
     public float attack1Rate = 2f;         //attacks per second (cooldown control)
     public string attack1Trigger = "attack"; //animator trigger name
+    public KnockbackData attack1Knockback; //knockback settings for attack 1
 
     [Header("Attack 2 Settings")]
     public KeyCode attack2Key = KeyCode.Q; //keyboard button for second attack
@@ -18,6 +19,7 @@ public class PlayerAttack : MonoBehaviour
     public int attack2Damage = 2;          //higher base damage
     public float attack2Rate = 1.2f;       //slower attack (heavier feel)
     public string attack2Trigger = "attack2"; //animator trigger name for 2nd attack
+    public KnockbackData attack2Knockback; //knockback for attack 2
 
     private float nextAttackTime = 0f; //tracks cooldown time between attacks
 
@@ -33,6 +35,7 @@ public class PlayerAttack : MonoBehaviour
     private float pendingRange;
     private int pendingBaseDamage;
     private float pendingHitstun;
+    private KnockbackData pendingKnockback; //stores knockback for the current attack
     private bool hitQueued;
 
     [Header("Ultimate Settings")]
@@ -84,20 +87,20 @@ public class PlayerAttack : MonoBehaviour
         //Attack 1 input check
         if (Input.GetKeyDown(attack1Key))
         {
-            DoAttack(attack1Range, attack1Damage, attack1Rate, attack1Trigger, attack1Hitstun);
+            DoAttack(attack1Range, attack1Damage, attack1Rate, attack1Trigger, attack1Hitstun, attack1Knockback);
             return;
         }
 
         //Attack 2 input check
         if (Input.GetKeyDown(attack2Key))
         {
-            DoAttack(attack2Range, attack2Damage, attack2Rate, attack2Trigger, attack2Hitstun);
+            DoAttack(attack2Range, attack2Damage, attack2Rate, attack2Trigger, attack2Hitstun, attack2Knockback);
             return;
         }
     }
 
     //shared attack logic so we don't duplicate code
-    void DoAttack(float range, int baseDamage, float rate, string triggerName, float hitstun)
+    void DoAttack(float range, int baseDamage, float rate, string triggerName, float hitstun, KnockbackData knockback)
     {
         //set next cooldown time
         nextAttackTime = Time.time + 1f / rate;
@@ -124,6 +127,7 @@ public class PlayerAttack : MonoBehaviour
         pendingRange = range;
         pendingBaseDamage = baseDamage;
         pendingHitstun = hitstun;
+        pendingKnockback = knockback;
         hitQueued = true;
 
     }
@@ -144,7 +148,8 @@ public class PlayerAttack : MonoBehaviour
         //loop through all enemies hit
         foreach (Collider2D enemy in hitEnemies)
         {
-            EnemyHealth eh = enemy.GetComponent<EnemyHealth>();
+            EnemyHealth eh = enemy.GetComponentInParent<EnemyHealth>();
+            EnemyMotor em = enemy.GetComponentInParent<EnemyMotor>();
             if (eh == null) continue;
 
             //start with base damage
@@ -162,23 +167,60 @@ public class PlayerAttack : MonoBehaviour
 
             if (didDamage)
             {
-                //hitstop on enemy
+                if (em != null)
+                {
+                    // Figure out which direction the enemy should be launched
+                    // If enemy is to the right of player, direction = 1
+                    // If enemy is to the left of player, direction = -1
+                    float hitDirection = Mathf.Sign(enemy.transform.position.x - transform.position.x);
+
+                    // Safety check:
+                    // if for some reason the value becomes 0, force it to 1
+                    if (hitDirection == 0f)
+                        hitDirection = 1f;
+
+                    // Apply the knockback data for this attack
+                    em.ApplyKnockback(pendingKnockback, hitDirection);
+
+                    Debug.Log("Applied knockback to " + enemy.name);
+                }
+
+                // =========================
+                // HITSTOP
+                // =========================
                 HitstopReceiver enemyStop = enemy.GetComponentInParent<HitstopReceiver>();
-                if(enemyStop != null)
+                if (enemyStop != null)
                 {
                     enemyStop.DoHitstop(hitstopOnHit);
                 }
 
-                
-                //add XP
+                // =========================
+                // XP GAIN
+                // =========================
                 if (playerXP != null)
                     playerXP.AddXP(xpPerHit);
 
-                //add ult charge
+                // =========================
+                // ULT CHARGE
+                // =========================
                 if (playerUltimate != null)
                     playerUltimate.GainUltFromHit();
             }
         }
 
+        // Hide the attack indicator after the hit frame
+        if (attackIndicator != null)
+        {
+            attackIndicator.gameObject.SetActive(false);
+        }
+
+    }
+    // Draw the attack radius in the Scene view for debugging
+    private void OnDrawGizmosSelected()
+    {
+        if (attackPoint == null) return;
+
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(attackPoint.position, pendingRange > 0 ? pendingRange : attack1Range);
     }
 }

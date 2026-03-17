@@ -1109,6 +1109,10 @@ PrefabInstance:
       propertyPath: target
       value: 
       objectReference: {fileID: 776800247}
+    - target: {fileID: 4791676523991364892, guid: a8b70105561a0834f9c27cf28a1363df, type: 3}
+      propertyPath: bounceLayers.m_Bits
+      value: 128
+      objectReference: {fileID: 0}
     - target: {fileID: 6001817731281430998, guid: a8b70105561a0834f9c27cf28a1363df, type: 3}
       propertyPath: m_LocalPosition.x
       value: 2.84
