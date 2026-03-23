@@ -19,6 +19,7 @@ GameObject:
   - component: {fileID: 1682924312087191888}
   - component: {fileID: 2728209481517008668}
   - component: {fileID: 8246665266558028478}
+  - component: {fileID: 8896764255753066627}
   m_Layer: 3
   m_Name: Player
   m_TagString: Player
@@ -39,7 +40,6 @@ Transform:
   m_LocalScale: {x: 2.1243, y: 2.1243, z: 2.1243}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 5451561493285585791}
   - {fileID: 4382511237380048286}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -142,6 +142,13 @@ MonoBehaviour:
   dashSpeed: 15
   dashDuration: 0.15
   dashCooldown: 2
+  jumpKey: 32
+  jumpForce: 10
+  jumpGravity: 22
+  maxJumpHeight: 3.5
+  landingRecovery: 0.05
+  visualToLift: {fileID: 0}
+  attackPointToLift: {fileID: 0}
 --- !u!114 &2399208212444601741
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -160,11 +167,21 @@ MonoBehaviour:
   attack1Damage: 1
   attack1Rate: 2
   attack1Trigger: attack
+  attack1Knockback:
+    horizontalForce: 4
+    verticalForce: 0
+    duration: 0.18
+    bounceDamping: 0.45
   attack2Key: 113
   attack2Range: 1
   attack2Damage: 2
   attack2Rate: 1.2
   attack2Trigger: attack2
+  attack2Knockback:
+    horizontalForce: 6
+    verticalForce: 0
+    duration: 0.35
+    bounceDamping: 0.55
   enemyLayers:
     serializedVersion: 2
     m_Bits: 64
@@ -173,6 +190,9 @@ MonoBehaviour:
   xpPerHit: 1
   attack1Hitstun: 0.12
   attack2Hitstun: 0.18
+  hitstopOnHit: 0.08
+  attack1Hitstop: 0.09
+  attack2Hitstop: 0.125
 --- !u!114 &4530050793686383146
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -202,9 +222,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 5
   currentHealth: 0
-  spriteRenderer: {fileID: 0}
-  flashColor: {r: 1, g: 0, b: 0, a: 1}
-  flashDuration: 0.1
+  spriteRenderer: {fileID: 5946297358312755858}
+  flashColor: {r: 1, g: 0.09385959, b: 0.0056602955, a: 1}
+  flashDuration: 0.2
   deathFlow: {fileID: 0}
 --- !u!114 &4207490102802227897
 MonoBehaviour:
@@ -315,6 +335,20 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &8896764255753066627
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2614577182934004233}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df273c5de7590254b99fdab31cd9e3ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 8246665266558028478}
+  rb: {fileID: 7995141040783447251}
 --- !u!1 &5052542304253987891
 GameObject:
   m_ObjectHideFlags: 0
@@ -341,37 +375,6 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.5, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 5358689756688411628}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &7496551045487831116
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 5451561493285585791}
-  m_Layer: 3
-  m_Name: GroundCheck
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &5451561493285585791
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7496551045487831116}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.99, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

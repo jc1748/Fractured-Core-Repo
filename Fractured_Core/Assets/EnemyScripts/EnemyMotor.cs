@@ -16,15 +16,28 @@ public class EnemyMotor : MonoBehaviour
     [SerializeField] private LayerMask bounceLayers;
     [SerializeField] private float bounceCooldown = 0.08f;
 
+    [Header("Air / Juggle Settings")]
+    [SerializeField] private float gravity = 18f;   //how fast enemy falls back down
+    [SerializeField] private float maxFallSpeed = 12f;  //prevents super fast falling
+
     private Rigidbody2D rb;
+
+    //normal ai movement
     private bool isMoving;
     private Vector2 destination;
 
+    //ground knockback
     private bool isKnockedBack; //true while enemy is knocked back
     private Vector2 knockbackVelocity; //current knockback movement speed
     private float lastBounceTime; //prevents rapid repeated bouncing
     private float currentBounceDamping = 0.45f; //current bounce damping for this hit
     private float knockbackTimer;
+
+    //air juggle state
+    private bool isAirborne;    //true while enemy is in air
+    private float verticalVelocity;     //upward & downward speed
+    private float groundY;      //the Y position enemy should land back on
+
 
     public float MoveSpeed => moveSpeed; //allows brain to read base speed
     public bool IsKnockedBack => isKnockedBack; //allows other scripts to check if enemy is knocked back

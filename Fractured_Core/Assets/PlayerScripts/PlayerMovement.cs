@@ -6,7 +6,7 @@ public class PlayerMovement : MonoBehaviour
     [Header("Movement")]
     public float moveSpeed = 5f;
 
-    // Beat 'em up style: allow up/down movement too
+    // Beat 'em up style movement on the flat gameplay plane
     public bool allowVerticalMovement = true;
 
     [Header("Dash Settings")]
@@ -14,9 +14,31 @@ public class PlayerMovement : MonoBehaviour
     public float dashDuration = 0.15f;
     public float dashCooldown = 2f;
 
+    [Header("Jump Settings")]
+    public KeyCode jumpKey = KeyCode.Space;
+
+    // How strong the jump starts
+    public float jumpForce = 10f;
+
+    // How fast the player falls back down
+    public float jumpGravity = 22f;
+
+    // Safety cap so jump does not go absurdly high
+    public float maxJumpHeight = 3.5f;
+
+    // Small delay after landing before another jump
+    public float landingRecovery = 0.05f;
+
+    [Header("Jump Visual References")]
+    // Assign this ONLY if you have a visual object you want to lift up/down.
+    // Do NOT assign the root player object here.
+    public Transform visualToLift;
+
+    // Assign this ONLY if your attack point does NOT already move with the visual.
+    // If your attack point is already a child of visualToLift, leave this empty.
+    public Transform attackPointToLift;
+
     private Animator anim;
-
-
     private Rigidbody2D rb;
 
     private Vector2 moveInput;
@@ -24,62 +46,123 @@ public class PlayerMovement : MonoBehaviour
     private float dashTimeLeft = 0f;
     private float nextDashTime = 0f;
 
-    //reference stat system so move speed stat can affect movement
+    // Reference stat system so move speed stat can affect movement
     private PlayerStats playerStats;
 
-    //store this in fixed update (fixed update runs on a physics update
+    // Store this in Update and use in FixedUpdate
     private float effectiveMoveSpeed;
 
-  
+    // JUMP STATE
+    
+    // True while player is in the air
+    private bool isAirborne = false;
+
+    // Current up/down jump speed
+    private float verticalVelocity = 0f;
+
+    // Fake jump height above the ground plane
+    private float jumpHeight = 0f;
+
+    // Small cooldown after landing
+    private float landingRecoveryTimer = 0f;
+
+    // Starting positions for lifted transforms
+    private Vector3 visualStartLocalPos;
+    private Vector3 attackPointStartLocalPos;
+
+    // Public properties so other scripts can check jump state
+    public bool IsAirborne
+    {
+        get { return isAirborne; }
+    }
+
+    public bool IsGrounded
+    {
+        get { return !isAirborne && landingRecoveryTimer <= 0f; }
+    }
+
+    // Optional helper for other systems
+    public float GetJumpHeight()
+    {
+        return jumpHeight;
+    }
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
 
-        //grab player stats from the same game object(player)
+        // Grab player stats from the same object
         playerStats = GetComponent<PlayerStats>();
 
-        //animation set up
+        // Try to find animator on this object first
         anim = GetComponent<Animator>();
 
-        // Make sure these are set in Inspector too:
-        // Rigidbody2D Body Type = Kinematic
-        // Collision Detection = Continuous (optional)
-        // Interpolate = Interpolate (optional)
+        // If animator is not on root, look in children
+        if (anim == null)
+        {
+            anim = GetComponentInChildren<Animator>();
+        }
+
+        // Save starting local position of the visual object
+        if (visualToLift != null)
+        {
+            visualStartLocalPos = visualToLift.localPosition;
+
+            // Warn if root object was assigned by mistake
+            if (visualToLift == transform)
+            {
+                Debug.LogWarning("PlayerMovement: visualToLift should not be the root player object.");
+            }
+        }
+
+        // Save starting local position of attack point if assigned separately
+        if (attackPointToLift != null)
+        {
+            attackPointStartLocalPos = attackPointToLift.localPosition;
+        }
     }
 
     private void Update()
     {
-        //read player input each frame
+        // Read player input each frame
         float horizontal = Input.GetAxisRaw("Horizontal");
         float vertical = allowVerticalMovement ? Input.GetAxisRaw("Vertical") : 0f;
 
-        //normalize so diagonal movement isn't faster than straight movement
+        // Normalize so diagonal movement isn't faster
         moveInput = new Vector2(horizontal, vertical).normalized;
 
-        // Flip sprite on horizontal movement only (preserve scale)
+        // Flip sprite / player facing on horizontal movement only
         if (horizontal != 0)
         {
             Vector3 s = transform.localScale;
-            s.x = Mathf.Abs(s.x) * Mathf.Sign(horizontal);//keeps size and only flips direction
+            s.x = Mathf.Abs(s.x) * Mathf.Sign(horizontal);
             transform.localScale = s;
         }
 
-        //start with base speed
+        // Start with base speed
         effectiveMoveSpeed = moveSpeed;
 
-        //if player stats exists, multiply by move speed mulitplier
-        if(playerStats != null)
+        // Apply move speed stat multiplier if it exists
+        if (playerStats != null)
         {
             effectiveMoveSpeed *= playerStats.GetMoveSpeedMultiplier();
         }
 
+        // Jump input
+        if (Input.GetKeyDown(jumpKey) && IsGrounded)
+        {
+            StartJump();
+        }
+
         // Dash input
-        if (Input.GetKeyDown(KeyCode.LeftShift) && Time.time >= nextDashTime && !isDashing)
+        // For now, only allow dash while grounded.
+        // This keeps things simpler and avoids weird air dash behavior.
+        if (Input.GetKeyDown(KeyCode.LeftShift) && Time.time >= nextDashTime && !isDashing && IsGrounded)
         {
             StartDash();
         }
 
-        // Dash timers + ghost spawns
+        // Dash timer
         if (isDashing)
         {
             dashTimeLeft -= Time.deltaTime;
@@ -90,11 +173,24 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
-        //animation movement
+        // Landing recovery timer
+        if (landingRecoveryTimer > 0f)
+        {
+            landingRecoveryTimer -= Time.deltaTime;
+        }
+
+        // Update jump motion every frame
+        HandleJumpMotion();
+
+        // Update any lifted visual objects
+        UpdateJumpVisuals();
+
+        // Animation parameters
         if (anim != null)
         {
             bool isMoving = moveInput.sqrMagnitude > 0.01f && !isDashing;
             anim.SetBool("isMoving", isMoving);
+            anim.SetBool("IsAirborne", isAirborne);
         }
     }
 
@@ -105,19 +201,17 @@ public class PlayerMovement : MonoBehaviour
 
         if (isDashing)
         {
-            // Dash in facing direction (x only, like Castle Crashers)
+            // Dash in facing direction on X only
             float facing = Mathf.Sign(transform.localScale.x);
-
-            //by default, dashSpeed is NOT affected by Move Speed stat
             delta = new Vector2(facing * dashSpeed, 0f) * Time.fixedDeltaTime;
         }
         else
         {
-            //use effectiveMoveSpeed (baseSpeed * move speed mulitplier)
+            // Normal grounded/air movement on the gameplay plane
+            // This still lets the player move while airborne.
             delta = moveInput * effectiveMoveSpeed * Time.fixedDeltaTime;
         }
 
-        //move position--good for kinematic/controlled movement
         rb.MovePosition(currentPos + delta);
     }
 
@@ -126,5 +220,68 @@ public class PlayerMovement : MonoBehaviour
         isDashing = true;
         dashTimeLeft = dashDuration;
         nextDashTime = Time.time + dashCooldown;
+    }
+
+    private void StartJump()
+    {
+        isAirborne = true;
+        verticalVelocity = jumpForce;
+
+        // Optional debug
+        Debug.Log("Player jump started");
+    }
+
+    private void HandleJumpMotion()
+    {
+        // If we are not airborne and already on the ground, do nothing
+        if (!isAirborne && jumpHeight <= 0f)
+            return;
+
+        // Apply fake gravity
+        verticalVelocity -= jumpGravity * Time.deltaTime;
+
+        // Move jump height using current vertical speed
+        jumpHeight += verticalVelocity * Time.deltaTime;
+
+        // Clamp maximum height
+        if (jumpHeight > maxJumpHeight)
+        {
+            jumpHeight = maxJumpHeight;
+        }
+
+        // Land when reaching ground again
+        if (jumpHeight <= 0f)
+        {
+            jumpHeight = 0f;
+            verticalVelocity = 0f;
+
+            if (isAirborne)
+            {
+                isAirborne = false;
+                landingRecoveryTimer = landingRecovery;
+
+                Debug.Log("Player landed");
+            }
+        }
+    }
+
+    private void UpdateJumpVisuals()
+    {
+        // Lift the visual object if assigned
+        if (visualToLift != null)
+        {
+            Vector3 pos = visualStartLocalPos;
+            pos.y += jumpHeight;
+            visualToLift.localPosition = pos;
+        }
+
+        // Lift attack point too, but only if it needs separate movement
+        // Leave this empty if attack point is already under the lifted visual object
+        if (attackPointToLift != null)
+        {
+            Vector3 pos = attackPointStartLocalPos;
+            pos.y += jumpHeight;
+            attackPointToLift.localPosition = pos;
+        }
     }
 }
