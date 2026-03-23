@@ -52,6 +52,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy_Soldier Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 1905273445948028061, guid: 8dd66218a3d7be346861160fefffc1f8, type: 3}
+      propertyPath: bounceLayers.m_Bits
+      value: 128
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

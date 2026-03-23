@@ -91,13 +91,14 @@ public class EnemyMotor : MonoBehaviour
         if (sprite != null && Mathf.Abs(toTarget.x) > 0.01f)
             sprite.flipX = toTarget.x < 0f;
 
-        //calculate movement step
+        //calculate movement step or simply just move
         Vector2 step = toTarget.normalized * moveSpeed * Time.fixedDeltaTime;
         rb.MovePosition(currentPos + step);
     }
 
     private void HandleKnockback()
     {
+        Debug.Log("Knockback active. Velocity: " + knockbackVelocity + " Timer: " + knockbackTimer);
         // During knockback, enemy should not play run animation
         if (animator != null)
         {

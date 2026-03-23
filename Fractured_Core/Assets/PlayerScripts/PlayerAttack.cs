@@ -172,12 +172,16 @@ public class PlayerAttack : MonoBehaviour
                     // Figure out which direction the enemy should be launched
                     // If enemy is to the right of player, direction = 1
                     // If enemy is to the left of player, direction = -1
-                    float hitDirection = Mathf.Sign(enemy.transform.position.x - transform.position.x);
+                    float hitDirection = Mathf.Sign(em.transform.position.x - transform.position.x);
 
                     // Safety check:
                     // if for some reason the value becomes 0, force it to 1
                     if (hitDirection == 0f)
                         hitDirection = 1f;
+
+                    Debug.Log("Found EnemyMotor on: " + em.name);
+                    Debug.Log("Hit direction: " + hitDirection);
+                    Debug.Log("Knockback values: " + pendingKnockback.horizontalForce + ", " + pendingKnockback.duration);
 
                     // Apply the knockback data for this attack
                     em.ApplyKnockback(pendingKnockback, hitDirection);
@@ -205,6 +209,7 @@ public class PlayerAttack : MonoBehaviour
                 // =========================
                 if (playerUltimate != null)
                     playerUltimate.GainUltFromHit();
+
             }
         }
 

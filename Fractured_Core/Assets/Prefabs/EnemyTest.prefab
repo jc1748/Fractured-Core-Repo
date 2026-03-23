@@ -15,7 +15,6 @@ GameObject:
   - component: {fileID: 3328308645709659489}
   - component: {fileID: 1905273445948028061}
   - component: {fileID: 221284956604851340}
-  - component: {fileID: 3634308534331406885}
   - component: {fileID: 7178416605963024331}
   m_Layer: 6
   m_Name: EnemyTest
@@ -161,6 +160,11 @@ MonoBehaviour:
   stopDistance: 1.4
   sprite: {fileID: 1306705988807508302}
   animator: {fileID: 3721378229342820255}
+  wallCheckDistance: 0.15
+  bounceLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  bounceCooldown: 0.08
 --- !u!61 &221284956604851340
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -207,20 +211,6 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 0.51861835, y: 0.64924705}
   m_EdgeRadius: 0
---- !u!114 &3634308534331406885
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 940748742133024128}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: df273c5de7590254b99fdab31cd9e3ab, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  animator: {fileID: 3721378229342820255}
-  rb: {fileID: 5370702543885602894}
 --- !u!114 &7178416605963024331
 MonoBehaviour:
   m_ObjectHideFlags: 0

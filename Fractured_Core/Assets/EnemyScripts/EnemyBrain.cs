@@ -43,6 +43,7 @@ public class EnemyBrain : MonoBehaviour
 
     private float baseMoveSpeed;
 
+
     private void Awake()
     {
         if (!motor) motor = GetComponent<EnemyMotor>();
@@ -98,8 +99,9 @@ public class EnemyBrain : MonoBehaviour
 
     private void Tick()
     {
-        //if hitstunned or attack-locked, freeze behavior and cancel any queued attack
-        if(enemyHealth != null && (enemyHealth.IsStunned || enemyHealth.AttackLocked))
+        // If the enemy is stunned from being hit,
+        // stop behavior and don't allow attacking
+        if (enemyHealth != null && (enemyHealth.IsStunned || enemyHealth.AttackLocked))
         {
             motor.Stop();
             
@@ -111,6 +113,19 @@ public class EnemyBrain : MonoBehaviour
             return;
         }
 
+        // If the enemy is currently being knocked back,
+        // stop AI decisions and let EnemyMotor handle movement
+        if (motor != null && motor.IsKnockedBack)
+        {
+            motor.Stop();
+
+            if (combat != null)
+            {
+                combat.CancelAttack();
+            }
+
+            return;
+        }
 
         if (!target)
         {
