@@ -34,10 +34,6 @@ public class PlayerMovement : MonoBehaviour
     // Do NOT assign the root player object here.
     public Transform visualToLift;
 
-    // Assign this ONLY if your attack point does NOT already move with the visual.
-    // If your attack point is already a child of visualToLift, leave this empty.
-    public Transform attackPointToLift;
-
     private Animator anim;
     private Rigidbody2D rb;
 
@@ -113,12 +109,6 @@ public class PlayerMovement : MonoBehaviour
             {
                 Debug.LogWarning("PlayerMovement: visualToLift should not be the root player object.");
             }
-        }
-
-        // Save starting local position of attack point if assigned separately
-        if (attackPointToLift != null)
-        {
-            attackPointStartLocalPos = attackPointToLift.localPosition;
         }
     }
 
@@ -275,13 +265,5 @@ public class PlayerMovement : MonoBehaviour
             visualToLift.localPosition = pos;
         }
 
-        // Lift attack point too, but only if it needs separate movement
-        // Leave this empty if attack point is already under the lifted visual object
-        if (attackPointToLift != null)
-        {
-            Vector3 pos = attackPointStartLocalPos;
-            pos.y += jumpHeight;
-            attackPointToLift.localPosition = pos;
-        }
     }
 }

@@ -21,6 +21,15 @@ public class PlayerAttack : MonoBehaviour
     public string attack2Trigger = "attack2"; //animator trigger name for 2nd attack
     public KnockbackData attack2Knockback; //knockback for attack 2
 
+    [Header("Launcher Attack Settings")]
+    public KeyCode launcherKey = KeyCode.Tab;          // key for launcher combo
+    public float launcherRange = 1.1f;                // how far the launcher reaches
+    public int launcherDamage = 2;                    // launcher damage
+    public float launcherRate = 1f;                   // slower than normal attacks
+    public string launcherTrigger = "launcher";       // animator trigger for launcher move
+    public float launcherHitstun = 0.22f;             // usually a bit longer stun
+    public KnockbackData launcherKnockback;           // upward launch values
+
     private float nextAttackTime = 0f; //tracks cooldown time between attacks
 
     public LayerMask enemyLayers; //which layers count as enemies
@@ -66,6 +75,13 @@ public class PlayerAttack : MonoBehaviour
 
         //if animator is on same object
         anim = GetComponent<Animator>();
+
+        //if it is not on the root, look in child objects
+        //this is important now that Animator is under VisualRoot
+        if(anim == null)
+        {
+            anim = GetComponentInChildren<Animator>();
+        }
     }
 
     void Start()
@@ -83,6 +99,13 @@ public class PlayerAttack : MonoBehaviour
         //prevent attacking if still on cooldown
         if (Time.time < nextAttackTime)
             return;
+
+        //launcher input attack
+        if(Input.GetKeyDown(launcherKey))
+        {
+            DoAttack(launcherRange, launcherDamage, launcherRate, launcherTrigger, launcherHitstun, launcherKnockback);
+            return;
+        }
 
         //Attack 1 input check
         if (Input.GetKeyDown(attack1Key))
