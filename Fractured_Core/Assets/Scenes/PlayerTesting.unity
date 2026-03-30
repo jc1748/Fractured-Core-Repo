@@ -768,11 +768,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2399208212444601741, guid: cc99c5ec914ae30438815ad7604f1758, type: 3}
       propertyPath: launcherKnockback.verticalForce
-      value: 10
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 2399208212444601741, guid: cc99c5ec914ae30438815ad7604f1758, type: 3}
       propertyPath: launcherKnockback.horizontalForce
-      value: 3
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2614577182934004233, guid: cc99c5ec914ae30438815ad7604f1758, type: 3}
       propertyPath: m_Name

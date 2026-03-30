@@ -127,6 +127,18 @@ public class EnemyBrain : MonoBehaviour
             return;
         }
 
+        //if the enemy is currently airborne, stop ai decisions until they land
+        if (motor != null && motor.IsAirborne)
+        {
+            motor.Stop();
+
+            if(combat != null)
+            {
+                combat.CancelAttack();
+            }
+            return;
+        }
+
         if (!target)
         {
             state = State.Idle;

@@ -29,6 +29,7 @@ public class EnemyMotor : MonoBehaviour
     //ground knockback
     private bool isKnockedBack; //true while enemy is knocked back
     private Vector2 knockbackVelocity; //current knockback movement speed
+    public bool IsAirborne => isAirborne; //lets the other scripts know if the enemy is currently in the air
     private float lastBounceTime; //prevents rapid repeated bouncing
     private float currentBounceDamping = 0.45f; //current bounce damping for this hit
     private float knockbackTimer;
@@ -58,7 +59,8 @@ public class EnemyMotor : MonoBehaviour
 
     public void MoveTo(Vector3 worldPos)
     {
-        if (isKnockedBack) return;//if enemy is knocked back, ignore movement commands
+        if (isKnockedBack || isAirborne) 
+            return;//if enemy is knocked back, ignore movement commands
 
         destination = worldPos; // Vector3 -> Vector2 implicit drops Z
         isMoving = true;
@@ -71,10 +73,29 @@ public class EnemyMotor : MonoBehaviour
 
     private void FixedUpdate()
     {
+        //if enemy is in the air, update vertical motion first
+        if (isAirborne)
+        {
+            HandleAirborne();
+        }
+
+
         //if enemy is being knocked back, ignore normal movement
         if (isKnockedBack)
         {
             HandleKnockback();
+            return;
+        }
+
+        //update animator when airborne
+        // If enemy is airborne, do not allow normal chase movement
+        if (isAirborne)
+        {
+            if (animator != null)
+            {
+                animator.SetBool("IsMoving", false);
+            }
+
             return;
         }
 
@@ -175,6 +196,36 @@ public class EnemyMotor : MonoBehaviour
 
     }
 
+    private void HandleAirborne()
+    {
+        //apply gravity every physics step
+        verticalVelocity -= gravity * Time.fixedDeltaTime;
+        
+        //prevent the enemy from falling too fast
+        if(verticalVelocity < -maxFallSpeed)
+        {
+            verticalVelocity = -maxFallSpeed;
+        }
+
+        //move the enemy vertically
+        Vector2 currentPos = rb.position;
+        float newY = currentPos.y + (verticalVelocity * Time.fixedDeltaTime);
+
+        //if enemy has reached the ground again, land
+        if(newY <= groundY)
+        {
+            newY = groundY;
+            verticalVelocity = 0f;
+            isAirborne = false;
+
+            Debug.Log(name + " landed");
+        }
+
+        //apply the new vertical position
+        rb.MovePosition(new Vector2(currentPos.x, newY));
+
+    }
+
     //main knockback function
     //uses knockback data structure
     public void ApplyKnockback(KnockbackData data, float hitDirection)
@@ -191,17 +242,26 @@ public class EnemyMotor : MonoBehaviour
         // Set bounce damping from your data
         currentBounceDamping = data.bounceDamping;
 
-        // Build knockback velocity
-        // hitDirection should be:
-        //  1 = knock right
-        // -1 = knock left
-        knockbackVelocity = new Vector2(
-            data.horizontalForce * hitDirection,
-            data.verticalForce
-        );
+        // Horizontal knockback happens on the X axis
+        knockbackVelocity = new Vector2(data.horizontalForce * hitDirection,0f);
 
-        // Helpful debug message so you can confirm it fired
-        Debug.Log("Knockback applied: " + knockbackVelocity);
+        // If this attack has vertical force, launch the enemy into the air
+        if (data.verticalForce > 0f)
+        {
+          // Store the ground position so enemy knows where to land
+          groundY = rb.position.y;
+
+          // Mark as airborne
+          isAirborne = true;
+
+          // Set upward launch speed
+          verticalVelocity = data.verticalForce;
+
+          Debug.Log(name + " launched into the air with vertical force: " + verticalVelocity);
+        }
+
+       // Helpful debug message so you can confirm it fired
+       Debug.Log("Knockback applied: " + knockbackVelocity);
     }
 
 
