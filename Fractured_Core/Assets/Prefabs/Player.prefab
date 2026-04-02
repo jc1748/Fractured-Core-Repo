@@ -86,10 +86,10 @@ MonoBehaviour:
   dashDuration: 0.15
   dashCooldown: 2
   jumpKey: 32
-  jumpForce: 10
-  jumpGravity: 22
-  maxJumpHeight: 3.5
-  landingRecovery: 0.05
+  jumpForce: 7
+  jumpGravity: 16
+  maxJumpHeight: 2.5
+  landingRecovery: 0.08
   visualToLift: {fileID: 3100513131220335861}
 --- !u!114 &2399208212444601741
 MonoBehaviour:
@@ -110,7 +110,7 @@ MonoBehaviour:
   attack1Rate: 2
   attack1Trigger: attack
   attack1Knockback:
-    horizontalForce: 4
+    horizontalForce: 1
     verticalForce: 0
     duration: 0.18
     bounceDamping: 0.45
@@ -120,7 +120,7 @@ MonoBehaviour:
   attack2Rate: 1.2
   attack2Trigger: attack2
   attack2Knockback:
-    horizontalForce: 6
+    horizontalForce: 2
     verticalForce: 0
     duration: 0.35
     bounceDamping: 0.55
@@ -129,10 +129,10 @@ MonoBehaviour:
   launcherDamage: 2
   launcherRate: 1.5
   launcherTrigger: launcher
-  launcherHitstun: 0.5
+  launcherHitstun: 0.4
   launcherKnockback:
     horizontalForce: 0
-    verticalForce: 15
+    verticalForce: 13
     duration: 0.25
     bounceDamping: 0.35
   launcherSelfLaunchForce: 6

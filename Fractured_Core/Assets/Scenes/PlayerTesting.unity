@@ -738,11 +738,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4964310135942069319, guid: cc99c5ec914ae30438815ad7604f1758, type: 3}
       propertyPath: jumpForce
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 4964310135942069319, guid: cc99c5ec914ae30438815ad7604f1758, type: 3}
-      propertyPath: landingRecovery
-      value: 0.08
+      value: 6.5
       objectReference: {fileID: 0}
     - target: {fileID: 5358689756688411628, guid: cc99c5ec914ae30438815ad7604f1758, type: 3}
       propertyPath: m_LocalPosition.x
@@ -801,6 +797,10 @@ PrefabInstance:
       propertyPath: target
       value: 
       objectReference: {fileID: 776800247}
+    - target: {fileID: 7291144923652089131, guid: 2b18c305e3b9a94448a4c9a21e52f7e8, type: 3}
+      propertyPath: maxFallSpeed
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 8237515038003794998, guid: 2b18c305e3b9a94448a4c9a21e52f7e8, type: 3}
       propertyPath: m_Name
       value: Enemy_Grunt
@@ -863,6 +863,10 @@ PrefabInstance:
       propertyPath: target
       value: 
       objectReference: {fileID: 776800247}
+    - target: {fileID: 5192824384336570711, guid: e8f76e1ce75811a47a887e53d84bc988, type: 3}
+      propertyPath: maxFallSpeed
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 6423636410227553693, guid: e8f76e1ce75811a47a887e53d84bc988, type: 3}
       propertyPath: m_LocalPosition.x
       value: 6.07
@@ -1047,6 +1051,10 @@ PrefabInstance:
       propertyPath: target
       value: 
       objectReference: {fileID: 776800247}
+    - target: {fileID: 4791676523991364892, guid: a8b70105561a0834f9c27cf28a1363df, type: 3}
+      propertyPath: maxFallSpeed
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 6001817731281430998, guid: a8b70105561a0834f9c27cf28a1363df, type: 3}
       propertyPath: m_LocalPosition.x
       value: 2.84
