@@ -9,23 +9,29 @@ public class PlayerAnimationEventRelay : MonoBehaviour
 
     private void Awake()
     {
-        // Find PlayerAttack on this object or its parent objects
         playerAttack = GetComponentInParent<PlayerAttack>();
 
-        // Warn you if it cannot be found
         if (playerAttack == null)
         {
             Debug.LogWarning("PlayerAnimationEventRelay could not find PlayerAttack in parent objects.");
         }
     }
 
-    // This method name must match the animation event name
+    // Called by animation event for hit frames
     public void AnimEvent_DoHit()
     {
-        // Forward the event to the real attack script
         if (playerAttack != null)
         {
             playerAttack.AnimEvent_DoHit();
+        }
+    }
+
+    // Called by animation event for launcher self-lift
+    public void AnimEvent_LaunchPlayer()
+    {
+        if (playerAttack != null)
+        {
+            playerAttack.AnimEvent_LaunchPlayer();
         }
     }
 }

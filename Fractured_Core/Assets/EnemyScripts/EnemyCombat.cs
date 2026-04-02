@@ -104,9 +104,30 @@ public class EnemyCombat : MonoBehaviour
             return; //player not in range at the hit moment
         }
 
-        //deal damage if that object can take damage
+        // Try to find the player's movement script
+        PlayerMovement playerMovement = hit.GetComponent<PlayerMovement>();
+
+        // If the collider is on a child object, also try parent
+        if (playerMovement == null)
+        {
+            playerMovement = hit.GetComponentInParent<PlayerMovement>();
+        }
+
+        // If player is airborne, ignore this grounded hit
+        if (playerMovement != null && playerMovement.IsAirborne)
+        {
+            Debug.Log("Enemy attack missed because player is airborne.");
+            return;
+        }
+
+        // Deal damage if that object can take damage
         PlayerHealth playerHealth = hit.GetComponent<PlayerHealth>();
-        if(playerHealth != null)
+        if (playerHealth == null)
+        {
+            playerHealth = hit.GetComponentInParent<PlayerHealth>();
+        }
+
+        if (playerHealth != null)
         {
             playerHealth.TakeDamage(damage);
         }

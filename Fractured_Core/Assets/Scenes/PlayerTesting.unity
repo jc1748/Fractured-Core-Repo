@@ -641,28 +641,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &1535911604 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 3100513131220335861, guid: cc99c5ec914ae30438815ad7604f1758, type: 3}
-  m_PrefabInstance: {fileID: 888501999178625439}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &1546982333 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3941946709839753670, guid: cc99c5ec914ae30438815ad7604f1758, type: 3}
-  m_PrefabInstance: {fileID: 888501999178625439}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1546982337
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1546982333}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 618a99f1ff9019747be0c5924565ed36, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1776367194
 GameObject:
   m_ObjectHideFlags: 0
@@ -754,41 +732,17 @@ PrefabInstance:
       propertyPath: cameraShake
       value: 
       objectReference: {fileID: 704621880}
-    - target: {fileID: 2399208212444601741, guid: cc99c5ec914ae30438815ad7604f1758, type: 3}
-      propertyPath: launcherRange
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2399208212444601741, guid: cc99c5ec914ae30438815ad7604f1758, type: 3}
-      propertyPath: launcherKnockback.duration
-      value: 0.25
-      objectReference: {fileID: 0}
-    - target: {fileID: 2399208212444601741, guid: cc99c5ec914ae30438815ad7604f1758, type: 3}
-      propertyPath: launcherKnockback.bounceDamping
-      value: 0.35
-      objectReference: {fileID: 0}
-    - target: {fileID: 2399208212444601741, guid: cc99c5ec914ae30438815ad7604f1758, type: 3}
-      propertyPath: launcherKnockback.verticalForce
-      value: 15
-      objectReference: {fileID: 0}
-    - target: {fileID: 2399208212444601741, guid: cc99c5ec914ae30438815ad7604f1758, type: 3}
-      propertyPath: launcherKnockback.horizontalForce
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 2614577182934004233, guid: cc99c5ec914ae30438815ad7604f1758, type: 3}
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 4964310135942069319, guid: cc99c5ec914ae30438815ad7604f1758, type: 3}
-      propertyPath: visualRoot
-      value: 
-      objectReference: {fileID: 1535911604}
+      propertyPath: jumpForce
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 4964310135942069319, guid: cc99c5ec914ae30438815ad7604f1758, type: 3}
-      propertyPath: visualToLift
-      value: 
-      objectReference: {fileID: 1535911604}
-    - target: {fileID: 4964310135942069319, guid: cc99c5ec914ae30438815ad7604f1758, type: 3}
-      propertyPath: attackPointToLift
-      value: 
+      propertyPath: landingRecovery
+      value: 0.08
       objectReference: {fileID: 0}
     - target: {fileID: 5358689756688411628, guid: cc99c5ec914ae30438815ad7604f1758, type: 3}
       propertyPath: m_LocalPosition.x
@@ -833,10 +787,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 3941946709839753670, guid: cc99c5ec914ae30438815ad7604f1758, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1546982337}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cc99c5ec914ae30438815ad7604f1758, type: 3}
 --- !u!1001 &2963564501821356326
 PrefabInstance:

@@ -30,6 +30,9 @@ public class PlayerAttack : MonoBehaviour
     public float launcherHitstun = 0.22f;             // usually a bit longer stun
     public KnockbackData launcherKnockback;           // upward launch values
 
+    [Header("Launcher Movement")]
+    public float launcherSelfLaunchForce = 8f;
+
     private float nextAttackTime = 0f; //tracks cooldown time between attacks
 
     public LayerMask enemyLayers; //which layers count as enemies
@@ -66,12 +69,16 @@ public class PlayerAttack : MonoBehaviour
     public float attack1Hitstop = 0.035f;
     public float attack2Hitstop = 0.055f;
 
+    private PlayerMovement playerMovement;
+
+
     void Awake()
     {
         //grab needed components from this same player object
         playerXP = GetComponent<PlayerXP>();
         playerStats = GetComponent<PlayerStats>();
         playerUltimate = GetComponent<PlayerUltimate>();
+        playerMovement = GetComponent<PlayerMovement>();
 
         //if animator is on same object
         anim = GetComponent<Animator>();
@@ -103,10 +110,12 @@ public class PlayerAttack : MonoBehaviour
         //launcher input attack
         if(Input.GetKeyDown(launcherKey))
         {
+            //perform launcher attack using its own stats
             DoAttack(launcherRange, launcherDamage, launcherRate, launcherTrigger, launcherHitstun, launcherKnockback);
             return;
         }
 
+       
         //Attack 1 input check
         if (Input.GetKeyDown(attack1Key))
         {
@@ -212,24 +221,20 @@ public class PlayerAttack : MonoBehaviour
                     Debug.Log("Applied knockback to " + enemy.name);
                 }
 
-                // =========================
+    
                 // HITSTOP
-                // =========================
                 HitstopReceiver enemyStop = enemy.GetComponentInParent<HitstopReceiver>();
                 if (enemyStop != null)
                 {
                     enemyStop.DoHitstop(hitstopOnHit);
                 }
 
-                // =========================
                 // XP GAIN
-                // =========================
                 if (playerXP != null)
                     playerXP.AddXP(xpPerHit);
 
-                // =========================
+  
                 // ULT CHARGE
-                // =========================
                 if (playerUltimate != null)
                     playerUltimate.GainUltFromHit();
 
@@ -242,6 +247,16 @@ public class PlayerAttack : MonoBehaviour
             attackIndicator.gameObject.SetActive(false);
         }
 
+    }
+
+    // Called from animation event during launcher animation
+    public void AnimEvent_LaunchPlayer()
+    {
+        //make the player rise up after using launch attack
+        if (playerMovement != null)
+        {
+            playerMovement.LaunchPlayer(launcherSelfLaunchForce);
+        }
     }
     // Draw the attack radius in the Scene view for debugging
     private void OnDrawGizmosSelected()

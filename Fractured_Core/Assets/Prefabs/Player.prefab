@@ -91,7 +91,6 @@ MonoBehaviour:
   maxJumpHeight: 3.5
   landingRecovery: 0.05
   visualToLift: {fileID: 3100513131220335861}
-  attackPointToLift: {fileID: 0}
 --- !u!114 &2399208212444601741
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -125,6 +124,18 @@ MonoBehaviour:
     verticalForce: 0
     duration: 0.35
     bounceDamping: 0.55
+  launcherKey: 9
+  launcherRange: 1
+  launcherDamage: 2
+  launcherRate: 1.5
+  launcherTrigger: launcher
+  launcherHitstun: 0.5
+  launcherKnockback:
+    horizontalForce: 0
+    verticalForce: 15
+    duration: 0.25
+    bounceDamping: 0.35
+  launcherSelfLaunchForce: 6
   enemyLayers:
     serializedVersion: 2
     m_Bits: 64
@@ -314,7 +325,7 @@ GameObject:
   - component: {fileID: 8738845683297487416}
   - component: {fileID: 1685289384580146753}
   - component: {fileID: 4897549393405527257}
-  - component: {fileID: 6253211900064681428}
+  - component: {fileID: 4264528098780755064}
   m_Layer: 0
   m_Name: SpriteObject
   m_TagString: Untagged
@@ -414,7 +425,7 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &6253211900064681428
+--- !u!114 &4264528098780755064
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

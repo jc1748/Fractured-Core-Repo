@@ -14,6 +14,7 @@ public class PlayerMovement : MonoBehaviour
     public float dashDuration = 0.15f;
     public float dashCooldown = 2f;
 
+
     [Header("Jump Settings")]
     public KeyCode jumpKey = KeyCode.Space;
 
@@ -219,6 +220,13 @@ public class PlayerMovement : MonoBehaviour
 
         // Optional debug
         Debug.Log("Player jump started");
+    }
+
+    //this is used for the launcher attack to bring the player in the air a bit when using the attack
+    public void LaunchPlayer(float launchForce)
+    {
+        isAirborne = true;
+        verticalVelocity = launchForce;
     }
 
     private void HandleJumpMotion()
