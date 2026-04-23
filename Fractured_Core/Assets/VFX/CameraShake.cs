@@ -3,18 +3,16 @@ using UnityEngine;
 
 public class CameraShake : MonoBehaviour
 {
-    private Vector3 originalPos;
+    private CameraFollow cameraFollow;
     private Coroutine shakeRoutine;
 
     void Awake()
     {
-        originalPos = transform.localPosition;
+        cameraFollow = GetComponent<CameraFollow>();
     }
 
-    //call this from anywhere to shake the camera
     public void Shake(float duration, float strength)
     {
-        //if already shaking, restart it(feels consistent)
         if (shakeRoutine != null)
         {
             StopCoroutine(shakeRoutine);
@@ -31,16 +29,21 @@ public class CameraShake : MonoBehaviour
         {
             time += Time.deltaTime;
 
-            //random offset inside small circle
             Vector2 offset = Random.insideUnitCircle * strength;
 
-            transform.localPosition = originalPos + new Vector3(offset.x, offset.y, 0f);
+            if (cameraFollow != null)
+            {
+                cameraFollow.SetShakeOffset(new Vector3(offset.x, offset.y, 0f));
+            }
 
             yield return null;
         }
 
-        //return camera to original position
-        transform.localPosition = originalPos;
+        if (cameraFollow != null)
+        {
+            cameraFollow.SetShakeOffset(Vector3.zero);
+        }
+
         shakeRoutine = null;
     }
 }

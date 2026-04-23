@@ -42,6 +42,15 @@ public class PlayerUltimate : MonoBehaviour
     {
         //grab player stats from the same player object
         stats = GetComponent<PlayerStats>();
+
+        if(cameraShake == null)
+        {
+            Camera mainCam = Camera.main;
+            if(mainCam != null)
+            {
+                cameraShake = mainCam.GetComponent<CameraShake>();
+            }
+        }
     }
 
     void Update()
