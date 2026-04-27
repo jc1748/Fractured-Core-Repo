@@ -3273,7 +3273,6 @@ GameObject:
   - component: {fileID: 704621876}
   - component: {fileID: 704621879}
   - component: {fileID: 704621880}
-  - component: {fileID: 704621881}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -3349,7 +3348,7 @@ Transform:
   m_GameObject: {fileID: 704621875}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 2.0999422, y: -0.045858517, z: -9.925902}
+  m_LocalPosition: {x: 2.0999422, y: -0.045858517, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3411,24 +3410,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 841424dfa7fe48e4da4fe3b5099a5a81, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &704621881
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 704621875}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2233814f9fb2e2f4a98e6b44e3016828, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  stats:
-    statPoints: 0
-    strength: 0
-    defense: 0
-    moveSpeed: 0
-    ultStat: 0
 --- !u!1 &717039278
 GameObject:
   m_ObjectHideFlags: 0
@@ -5425,7 +5406,7 @@ MonoBehaviour:
   followY: 0
   useBounds: 1
   minX: -2
-  maxX: 130
+  maxX: 128
   minY: 0
   maxY: 0
 --- !u!1001 &1519015914

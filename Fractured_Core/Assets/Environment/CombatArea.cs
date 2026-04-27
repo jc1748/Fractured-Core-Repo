@@ -19,6 +19,11 @@ public class CombatArea : MonoBehaviour
     public GameObject leftWall; 
     public GameObject rightWall;
 
+    void Awake()
+    {
+        cameraController = FindFirstObjectByType<CameraController>();
+    }
+
     void Start()
     {
         // Hide enemies until combat starts, unless this is the first area
@@ -56,7 +61,7 @@ public class CombatArea : MonoBehaviour
             cameraController = FindFirstObjectByType<CameraController>();
         }
 
-        if (cameraController != null)
+        if (cameraController != null && cameraLockPoint != null)
         {
             cameraController.LockCamera(cameraLockPoint.position);
         }

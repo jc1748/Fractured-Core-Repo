@@ -26,6 +26,8 @@ public class CameraController : MonoBehaviour
 
     void LateUpdate()
     {
+        Debug.Log("Camera LateUpdate running. isLocked = " + isLocked + " player = " + player);
+
         if (isLocked)
         {
             transform.position = lockedPosition;
@@ -57,9 +59,9 @@ public class CameraController : MonoBehaviour
         }
 
         transform.position = Vector3.Lerp(
-            transform.position,
-            targetPosition,
-            followSpeed * Time.deltaTime
+        transform.position,
+        targetPosition,
+        followSpeed * Time.deltaTime
         );
     }
 
@@ -79,7 +81,7 @@ public class CameraController : MonoBehaviour
     public void UnlockCamera()
     {
         isLocked = false;
-        Debug.Log("Camera unlocked inside CameraController.");
+        Debug.Log("Camera unlocked on: " + gameObject.name);
     }
 
     private void FindPlayerIfMissing()

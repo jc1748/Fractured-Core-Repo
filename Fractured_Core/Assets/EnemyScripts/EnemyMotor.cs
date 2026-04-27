@@ -132,7 +132,7 @@ public class EnemyMotor : MonoBehaviour
 
     private void HandleKnockback()
     {
-        Debug.Log("Knockback active. Velocity: " + knockbackVelocity + " Timer: " + knockbackTimer);
+       
         // During knockback, enemy should not play run animation
         if (animator != null)
         {
