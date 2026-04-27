@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
@@ -9,31 +10,49 @@ public class EnemySpawner : MonoBehaviour
     public Transform[] spawnPoints;  //empty objects where enemies appear
 
     [Header("Spawn Settings")]
-    public int enemiesToSpawn = 3; //how many enemies appear
+    public int enemiesToSpawn = 3; //total enemies per wave
 
     private bool hasSpawned = false;
 
-    void Start()
-    {
-        SpawnEnemies();
-    }
+    private List<GameObject> spawnedEnemies = new List<GameObject>();
 
-    void SpawnEnemies()
+    public void StartSpawning()
     {
         if (hasSpawned) return;
 
-        for(int i = 0; i < enemiesToSpawn; i++)
-        {
-            //pick random enemy type
-            GameObject enemyPrefab = enemyPrefabs[Random.Range(0, enemyPrefabs.Length)];
-
-            //pick random location
-            Transform spawnPoint = spawnPoints[Random.Range(0, spawnPoints.Length)];
-
-            Instantiate(enemyPrefab, spawnPoint.position, Quaternion.identity);
-        }
-
         hasSpawned = true;
+
+        for (int i = 0; i < enemiesToSpawn; i++)
+        {
+            // pick random enemy type
+            GameObject enemyPrefab = enemyPrefabs[
+                Random.Range(0, enemyPrefabs.Length)
+            ];
+
+            // pick random spawn point
+            Transform spawnPoint = spawnPoints[
+                Random.Range(0, spawnPoints.Length)
+            ];
+
+            // spawn enemy
+            GameObject enemy = Instantiate(
+                enemyPrefab,
+                spawnPoint.position,
+                Quaternion.identity
+            );
+
+            // add to list so we can track it
+            spawnedEnemies.Add(enemy);
+        }
+    }
+
+    public bool AllEnemiesDefeated()
+    {
+        //clean up destroyed enemies
+        spawnedEnemies.RemoveAll(enemyPrefabs => enemyPrefabs == null);
+
+        //if list is empty, all enemies are dead
+        return hasSpawned && spawnedEnemies.Count == 0;
     }
 
 }

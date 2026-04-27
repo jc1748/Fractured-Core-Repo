@@ -92,33 +92,61 @@ public class DeathMenuController : MonoBehaviour
     //Button callbacks ----
     public void SpendStrength()
     {
-        Debug.Log("SpendStrength clicked. playerStats=" + playerStats);
         if (playerStats == null) return;
+
         playerStats.UpgradeStrength();
+
+        if (RunManager.Instance != null)
+            RunManager.Instance.stats.strength = playerStats.strength;
+
+        if (RunManager.Instance != null)
+            RunManager.Instance.stats.statPoints = playerStats.statPoints;
+
         RefreshUI();
     }
 
     public void SpendDefense()
     {
-        Debug.Log("SpendDefense clicked. playerStats=" + playerStats);
         if (playerStats == null) return;
+
         playerStats.UpgradeDefense();
+
+        if (RunManager.Instance != null)
+        {
+            RunManager.Instance.stats.defense = playerStats.defense;
+            RunManager.Instance.stats.statPoints = playerStats.statPoints;
+        }
+
         RefreshUI();
     }
 
     public void SpendMoveSpeed()
     {
-        Debug.Log("SpendMoveSpeed clicked. playerStats=" + playerStats);
         if (playerStats == null) return;
+
         playerStats.UpgradeMoveSpeed();
+
+        if (RunManager.Instance != null)
+        {
+            RunManager.Instance.stats.moveSpeed = playerStats.moveSpeed;
+            RunManager.Instance.stats.statPoints = playerStats.statPoints;
+        }
+
         RefreshUI();
     }
 
     public void SpendUltimate()
     {
-        Debug.Log("SpendUltimate clicked. playerStats=" + playerStats);
         if (playerStats == null) return;
+
         playerStats.UpgradeUltimate();
+
+        if (RunManager.Instance != null)
+        {
+            RunManager.Instance.stats.ultStat = playerStats.ultStat;
+            RunManager.Instance.stats.statPoints = playerStats.statPoints;
+        }
+
         RefreshUI();
     }
 

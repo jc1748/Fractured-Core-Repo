@@ -1,0 +1,533 @@
+fileFormatVersion: 2
+guid: 6da127ac9f6c9884b93c084ecc40315d
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 1701148351200677986
+    second: Underground_Midground_0
+  - first:
+      213: -5773986653949923245
+    second: Underground_Midground_1
+  - first:
+      213: 6040986455127489094
+    second: Underground_Midground_2
+  - first:
+      213: 2863277639015969656
+    second: Underground_Midground_3
+  - first:
+      213: 1841225251782235523
+    second: Underground_Midground_4
+  - first:
+      213: -9204155275617430726
+    second: Underground_Midground_5
+  - first:
+      213: 1353587737218589585
+    second: Underground_Midground_6
+  - first:
+      213: -5428699825405226481
+    second: Underground_Midground_7
+  - first:
+      213: 7784172581305634154
+    second: Underground_Midground_8
+  - first:
+      213: -1673632422187263415
+    second: Underground_Midground_9
+  - first:
+      213: -818389230153219708
+    second: Underground_Midground_10
+  - first:
+      213: -8976335827855569189
+    second: Underground_Midground_11
+  - first:
+      213: -7283846419433079036
+    second: Underground_Midground_12
+  - first:
+      213: -2224032583382069193
+    second: Underground_Midground_13
+  - first:
+      213: -7147481098656892133
+    second: Underground_Midground_14
+  - first:
+      213: 587544083778396823
+    second: Underground_Midground_15
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 1
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Underground_Midground_0
+      rect:
+        serializedVersion: 2
+        x: 2670
+        y: 184
+        width: 2653
+        height: 648
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 260de8f8961bb9710800000000000000
+      internalID: 1701148351200677986
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Underground_Midground_1
+      rect:
+        serializedVersion: 2
+        x: 3658
+        y: 807
+        width: 161
+        height: 69
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 350f779eabdaedfa0800000000000000
+      internalID: -5773986653949923245
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Underground_Midground_2
+      rect:
+        serializedVersion: 2
+        x: 3832
+        y: 817
+        width: 26
+        height: 66
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 64af1d6ac25e5d350800000000000000
+      internalID: 6040986455127489094
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Underground_Midground_3
+      rect:
+        serializedVersion: 2
+        x: 3973
+        y: 823
+        width: 7
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 873bdd6a7d76cb720800000000000000
+      internalID: 2863277639015969656
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Underground_Midground_4
+      rect:
+        serializedVersion: 2
+        x: 3982
+        y: 822
+        width: 27
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 38595fb7c985d8910800000000000000
+      internalID: 1841225251782235523
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Underground_Midground_5
+      rect:
+        serializedVersion: 2
+        x: 3998
+        y: 775
+        width: 97
+        height: 57
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a331943ea85444080800000000000000
+      internalID: -9204155275617430726
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Underground_Midground_6
+      rect:
+        serializedVersion: 2
+        x: 4127
+        y: 817
+        width: 8
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1932d3910e8e8c210800000000000000
+      internalID: 1353587737218589585
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Underground_Midground_7
+      rect:
+        serializedVersion: 2
+        x: 3582
+        y: 160
+        width: 14
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f021f72754269a4b0800000000000000
+      internalID: -5428699825405226481
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Underground_Midground_8
+      rect:
+        serializedVersion: 2
+        x: 4210
+        y: 173
+        width: 32
+        height: 41
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a6dce0b68bfe60c60800000000000000
+      internalID: 7784172581305634154
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Underground_Midground_9
+      rect:
+        serializedVersion: 2
+        x: 3553
+        y: 109
+        width: 30
+        height: 52
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 94a93f6ed2016c8e0800000000000000
+      internalID: -1673632422187263415
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Underground_Midground_10
+      rect:
+        serializedVersion: 2
+        x: 4255
+        y: 111
+        width: 16
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 48146b8c45f74a4f0800000000000000
+      internalID: -818389230153219708
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Underground_Midground_11
+      rect:
+        serializedVersion: 2
+        x: 4269
+        y: 0
+        width: 62
+        height: 111
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bde8e0c8f16ad6380800000000000000
+      internalID: -8976335827855569189
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Underground_Midground_12
+      rect:
+        serializedVersion: 2
+        x: 3524
+        y: 67
+        width: 30
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 40fb033e5449aea90800000000000000
+      internalID: -7283846419433079036
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Underground_Midground_13
+      rect:
+        serializedVersion: 2
+        x: 3505
+        y: 25
+        width: 29
+        height: 41
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7301e9a1626a221e0800000000000000
+      internalID: -2224032583382069193
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Underground_Midground_14
+      rect:
+        serializedVersion: 2
+        x: 3505
+        y: 19
+        width: 9
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b1bbcbb4fcb0fcc90800000000000000
+      internalID: -7147481098656892133
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Underground_Midground_15
+      rect:
+        serializedVersion: 2
+        x: 3487
+        y: 0
+        width: 16
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7926e733b30672800800000000000000
+      internalID: 587544083778396823
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Underground_Midground_0: 1701148351200677986
+      Underground_Midground_1: -5773986653949923245
+      Underground_Midground_10: -818389230153219708
+      Underground_Midground_11: -8976335827855569189
+      Underground_Midground_12: -7283846419433079036
+      Underground_Midground_13: -2224032583382069193
+      Underground_Midground_14: -7147481098656892133
+      Underground_Midground_15: 587544083778396823
+      Underground_Midground_2: 6040986455127489094
+      Underground_Midground_3: 2863277639015969656
+      Underground_Midground_4: 1841225251782235523
+      Underground_Midground_5: -9204155275617430726
+      Underground_Midground_6: 1353587737218589585
+      Underground_Midground_7: -5428699825405226481
+      Underground_Midground_8: 7784172581305634154
+      Underground_Midground_9: -1673632422187263415
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

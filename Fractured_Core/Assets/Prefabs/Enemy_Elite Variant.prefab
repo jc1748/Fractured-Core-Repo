@@ -9,6 +9,14 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 812104918793562199, guid: 8dd66218a3d7be346861160fefffc1f8, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 812104918793562199, guid: 8dd66218a3d7be346861160fefffc1f8, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 812104918793562199, guid: 8dd66218a3d7be346861160fefffc1f8, type: 3}
       propertyPath: m_LocalPosition.x
       value: 6.07
       objectReference: {fileID: 0}
@@ -56,6 +64,18 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1306705988807508302, guid: 8dd66218a3d7be346861160fefffc1f8, type: 3}
+      propertyPath: m_Color.b
+      value: 0.5471698
+      objectReference: {fileID: 0}
+    - target: {fileID: 1306705988807508302, guid: 8dd66218a3d7be346861160fefffc1f8, type: 3}
+      propertyPath: m_Color.g
+      value: 0.5471698
+      objectReference: {fileID: 0}
+    - target: {fileID: 1306705988807508302, guid: 8dd66218a3d7be346861160fefffc1f8, type: 3}
+      propertyPath: m_Color.r
+      value: 0.5471698
+      objectReference: {fileID: 0}
     - target: {fileID: 3328308645709659489, guid: 8dd66218a3d7be346861160fefffc1f8, type: 3}
       propertyPath: damage
       value: 3
@@ -68,6 +88,14 @@ PrefabInstance:
       propertyPath: windupTime
       value: 0.25
       objectReference: {fileID: 0}
+    - target: {fileID: 3328308645709659489, guid: 8dd66218a3d7be346861160fefffc1f8, type: 3}
+      propertyPath: hitboxRadius
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 5494938063862226492, guid: 8dd66218a3d7be346861160fefffc1f8, type: 3}
+      propertyPath: m_SortingOrder
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 7428682827847348182, guid: 8dd66218a3d7be346861160fefffc1f8, type: 3}
       propertyPath: stats
       value: 
@@ -75,6 +103,10 @@ PrefabInstance:
     - target: {fileID: 7428682827847348182, guid: 8dd66218a3d7be346861160fefffc1f8, type: 3}
       propertyPath: windupSpeedMultiplier
       value: 1.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8318211903028710071, guid: 8dd66218a3d7be346861160fefffc1f8, type: 3}
+      propertyPath: dropChance
+      value: 0.35
       objectReference: {fileID: 0}
     - target: {fileID: 8318211903028710071, guid: 8dd66218a3d7be346861160fefffc1f8, type: 3}
       propertyPath: enemyMaxHealth

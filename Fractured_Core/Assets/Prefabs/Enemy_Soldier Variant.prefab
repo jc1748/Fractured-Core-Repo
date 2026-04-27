@@ -52,9 +52,33 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy_Soldier Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 1306705988807508302, guid: 8dd66218a3d7be346861160fefffc1f8, type: 3}
+      propertyPath: m_Color.b
+      value: 0.97735846
+      objectReference: {fileID: 0}
+    - target: {fileID: 1306705988807508302, guid: 8dd66218a3d7be346861160fefffc1f8, type: 3}
+      propertyPath: m_Color.g
+      value: 0.3300889
+      objectReference: {fileID: 0}
+    - target: {fileID: 1306705988807508302, guid: 8dd66218a3d7be346861160fefffc1f8, type: 3}
+      propertyPath: m_Color.r
+      value: 0.64640915
+      objectReference: {fileID: 0}
+    - target: {fileID: 1359037504955680113, guid: 8dd66218a3d7be346861160fefffc1f8, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.639
+      objectReference: {fileID: 0}
     - target: {fileID: 1905273445948028061, guid: 8dd66218a3d7be346861160fefffc1f8, type: 3}
       propertyPath: bounceLayers.m_Bits
       value: 128
+      objectReference: {fileID: 0}
+    - target: {fileID: 5494938063862226492, guid: 8dd66218a3d7be346861160fefffc1f8, type: 3}
+      propertyPath: m_SortingOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8318211903028710071, guid: 8dd66218a3d7be346861160fefffc1f8, type: 3}
+      propertyPath: dropChance
+      value: 0.2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

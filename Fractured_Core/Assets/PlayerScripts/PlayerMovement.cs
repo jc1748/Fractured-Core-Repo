@@ -14,6 +14,9 @@ public class PlayerMovement : MonoBehaviour
     public float dashDuration = 0.15f;
     public float dashCooldown = 2f;
 
+    [Header("Collision")]
+    public LayerMask wallLayer;
+    public float collisionCheckDistance = 0.05f;
 
     [Header("Jump Settings")]
     public KeyCode jumpKey = KeyCode.Space;
@@ -203,7 +206,21 @@ public class PlayerMovement : MonoBehaviour
             delta = moveInput * effectiveMoveSpeed * Time.fixedDeltaTime;
         }
 
-        rb.MovePosition(currentPos + delta);
+        //check if movement would detect would hit a combat wall
+        RaycastHit2D hit = Physics2D.BoxCast(
+                rb.position,                                  // origin (Vector2)
+                GetComponent<BoxCollider2D>().size,            // size (Vector2)
+                0f,                                            // angle (float)
+                delta.normalized,                              // direction (Vector2)
+                delta.magnitude + collisionCheckDistance,      // distance (float)
+                wallLayer                                      // layer mask
+            );
+
+        //only move if no wall is detected
+        if (hit.collider  == null)
+        {
+            rb.MovePosition(currentPos + delta);
+        }
     }
 
     private void StartDash()
