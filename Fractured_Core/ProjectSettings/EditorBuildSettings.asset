@@ -8,9 +8,6 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/SampleScene.unity
     guid: 8c9cfa26abfee488c85f1582747f6a02
-  - enabled: 1
-    path: Assets/Scenes/PlayerTesting.unity
-    guid: 721ddbac43c189443b3d090a0203777a
   - enabled: 0
     path: Assets/Scenes/IronDistrict.unity
     guid: cd5f6f36e08b75e4ea50c69b0481970a
@@ -23,6 +20,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/MainMenu.unity
     guid: 5c2f91c64415e23409f2fdd06022cc26
+  - enabled: 1
+    path: Assets/Scenes/PlayerTesting.unity
+    guid: 721ddbac43c189443b3d090a0203777a
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0

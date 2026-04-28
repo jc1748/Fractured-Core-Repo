@@ -35,10 +35,10 @@ public class PlayerStats : MonoBehaviour
     }
 
     //values from stat sheet that was previously calculated
-    private const float strengthPercent = 0.0386f;
-    private const float defensePercent = 0.0138f;
-    private const float moveSpeedPercent = 0.007f;
-    private const float ultChargePercent = 0.0104f;
+    private const float strengthPercent = 0.04f;
+    private const float defensePercent = 0.02f;
+    private const float moveSpeedPercent = 0.010f;
+    private const float ultChargePercent = 0.015f;
    
     //called by PlayerXP when leveling up
     public void AddStatPoints(int amount)
